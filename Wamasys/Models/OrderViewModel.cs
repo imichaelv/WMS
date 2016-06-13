@@ -21,7 +21,15 @@ namespace Wamasys.Models
 
     public class CreateSupplierOrderViewModel
     {
-        // Hier moet spul!
+        [Required]
+        public int Amount { get; set; }
+
+        public Product Product { get; set; }
+
+        /// <summary>
+        /// Contains products that are available to order.
+        /// </summary>
+        public List<Product> Products { get; set; }
     }
 
     /// <summary>
@@ -41,10 +49,10 @@ namespace Wamasys.Models
 
     public class CreateCustomerOrderViewModel
     {
-        // Hier moet spul!
+        // TODO: implementation of class
     }
 
-    public class CustomerSummaryViewModel
+    public class OrderSummaryViewModel
     {
         public List<CustomerOrder> CustomerOrders { get; set; }
 
