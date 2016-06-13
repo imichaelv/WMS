@@ -1,13 +1,45 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Warehouse Management System</h1>
+        <p class="lead">WMS is the perfect solution for the management of your warehouse logistics!</p>
+        <p><a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-lg">Login &raquo;</a>
+        </p>
+    </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Welcome!</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia est nunc,
+                quis vestibulum lectus iaculis sit amet. Ut lobortis odio diam, dapibus mattis nunc
+                dignissim in. Donec eu ante tellus. Donec a rhoncus tellus. Duis tempor porta egestas.
+                Ut nulla diam, porta quis accumsan eu, pharetra quis lacus. Duis in felis vel leo
+                molestie sodales. Donec lorem nibh, bibendum id arcu nec, vestibulum vehicula dolor.
+                Suspendisse libero libero, dapibus sed sollicitudin ac, molestie ac magna. Ut sit amet
+                blandit est. Praesent ac elit elit. Pellentesque euismod, nunc eget condimentum luctus,
+                est augue consequat sem, sed egestas risus mauris sed libero. Duis varius orci quam, eu
+                semper nunc ultricies efficitur. Etiam nibh ligula, porttitor facilisis laoreet lacinia,
+                ornare non leo. Vivamus eget sem congue, pellentesque nisl in, cursus mi.</p>
+
+            <p>Mauris vulputate, nunc a eleifend facilisis, urna eros ultricies arcu, at rhoncus
+                diam felis nec libero. Pellentesque neque lectus, sagittis sit amet ante eget,
+                vestibulum imperdiet massa. Fusce non luctus lectus. Suspendisse consequat pretium
+                pretium. Sed tempus maximus ligula at mattis. Proin volutpat rhoncus quam et suscipit.
+             In vitae convallis dolor.</p>
+        </div>
+
+        <div class="col-md-6">
+            <h3>&nbsp;</h3>
+            <img src="../../Content/Warehouse.jpg" alt="Warenhuis" style="width: 450px; height: 290px"/>
+        </div>
+    </div>
+</div>
+
+@{/*}
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
@@ -29,3 +61,4 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+*/}
