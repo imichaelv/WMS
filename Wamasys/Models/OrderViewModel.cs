@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 using Wamasys.Models.Database;
 
 namespace Wamasys.Models
 {
-
     /// <summary>
     /// Contains atributes for orders from suppliers.
     /// </summary>
@@ -23,9 +19,9 @@ namespace Wamasys.Models
         public int ProductId { get; set; }
     }
 
-    // Zeer conceptueel!
     public class CreateSupplierOrderViewModel
     {
+        // Hier moet spul!
     }
 
     /// <summary>
@@ -45,5 +41,13 @@ namespace Wamasys.Models
 
     public class CreateCustomerOrderViewModel
     {
+        // Hier moet spul!
+    }
+
+    public class CustomerSummaryViewModel
+    {
+        public List<CustomerOrder> CustomerOrders { get; set; }
+
+        public List<SupplierOrder> SupplierOrders { get; set; }
     }
 }
