@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Wamasys.Models
 {
+    /// <summary>
+    /// Contains atributes for statuses.
+    /// </summary>
     public class StatusViewModel
     {
         public int Id { get; set; }
@@ -12,5 +15,20 @@ namespace Wamasys.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
+    }
+
+    public class CreateStatusViewModel
+    {
+        
+    }
+
+    public class EditStatusViewModel
+    {
+        
+    }
+
+    public class DeleteStatusViewModel
+    {
+        
     }
 }

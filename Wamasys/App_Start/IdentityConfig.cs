@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Wamasys.Models;
+using Wamasys.Models.Database;
 
 namespace Wamasys
 {
