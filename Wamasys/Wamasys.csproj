@@ -194,7 +194,6 @@
     <Compile Include="Models\Database\Status.cs" />
     <Compile Include="Models\Database\Supplier.cs" />
     <Compile Include="Models\Database\SupplierOrder.cs" />
-    <Compile Include="Models\GetOrder.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrderParserModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
