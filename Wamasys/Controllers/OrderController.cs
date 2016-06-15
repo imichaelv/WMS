@@ -28,7 +28,8 @@ namespace Wamasys.Controllers
 
         public ActionResult AddCustomerOrder()
         {
-            return View();
+            var model = new CreateCustomerOrderViewModel();
+            return View(model);
         }
 
         public ActionResult AddSupplierOrder()

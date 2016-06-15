@@ -19,6 +19,9 @@ namespace Wamasys.Models
         public int ProductId { get; set; }
     }
 
+    /// <summary>
+    /// Contains attributes for creating orders for suppliers.
+    /// </summary>
     public class CreateSupplierOrderViewModel
     {
         [Required]
@@ -30,6 +33,10 @@ namespace Wamasys.Models
         /// Contains products that are available to order.
         /// </summary>
         public List<Product> Products { get; set; }
+
+        // Temporary though...
+        [Display(Name = "Product code")]
+        public int ProductCode { get; set; }
     }
 
     /// <summary>
@@ -49,7 +56,12 @@ namespace Wamasys.Models
 
     public class CreateCustomerOrderViewModel
     {
-        // TODO: implementation of class
+        // TODO: further implementation of class
+        public DateTime DateTime { get; set; }
+
+        public int CompanyId { get; set; }
+
+        public Company Company { get; set; }
     }
 
     public class OrderSummaryViewModel
