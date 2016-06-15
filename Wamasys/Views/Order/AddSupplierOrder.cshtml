@@ -30,6 +30,14 @@
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.Levels, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ListBox("educationId", Model.Levels, new { @class = "selectpicker", title = "Selecteer niveau", data_size = "10", data_live_search = "true", data_max_options = "1" })
+                        @Html.ValidationMessageFor(model => model.Courses, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
