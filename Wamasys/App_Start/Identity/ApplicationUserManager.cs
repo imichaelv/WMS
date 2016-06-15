@@ -20,7 +20,7 @@ namespace Wamasys.Identity
             var store =
                 new UserStore
                     <ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>(
-                    context.Get<WmsDbContext>());
+                    context.Get<ApplicationDbContext>());
             var manager = new ApplicationUserManager(store);
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
