@@ -19,8 +19,10 @@
             <div class="form-horizontal">
                 <hr />
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
+                @{
+                    /*
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductCode, htmlAttributes: new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
@@ -28,12 +30,14 @@
                         @Html.ValidationMessageFor(model => model.ProductCode, "", new {@class = "text-danger"})
                     </div>
                 </div>
+                */
+                }
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Levels, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Products, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ListBox("educationId", Model.Levels, new { @class = "selectpicker", title = "Selecteer niveau", data_size = "10", data_live_search = "true", data_max_options = "1" })
-                        @Html.ValidationMessageFor(model => model.Courses, "", new { @class = "text-danger" })
+                        @Html.ListBox("productId", Model.Products, new { @class = "selectpicker", title = "Selecteer niveau", data_size = "10", data_live_search = "true", data_max_options = "1" })
+                        <!-- @Html.ValidationMessageFor(model => model.Products, "", new { @class = "text-danger" }) -->
                     </div>
                 </div>
 
@@ -44,26 +48,6 @@
                         @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                @{
-                    /*
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @rows = 6 } })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.Duration, Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "selectpicker show-tick", title = "Selecteer duur", data_size = "10" })
-                        @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                */
-                }
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">

@@ -26,7 +26,8 @@ namespace Wamasys.Models
     public class CreateSupplierOrderViewModel
     {
         [Required]
-        public int Amount { get; set; }
+        [Range(1, 200, ErrorMessage = "Please enter a valid amount.")]
+        public int? Amount { get; set; }
 
         public Product Product { get; set; }
 

@@ -192,6 +192,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -428,6 +429,7 @@
     <Content Include="Views\Order\AddSupplierOrder.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\AddCustomerOrder.cshtml" />
+    <Content Include="Views\Product\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

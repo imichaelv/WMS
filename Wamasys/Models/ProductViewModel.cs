@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Wamasys.Models.Database;
 
 namespace Wamasys.Models
 {
@@ -15,5 +16,10 @@ namespace Wamasys.Models
         public int MinimumAmount { get; set; }
 
         public int PropertyId { get; set; }
+    }
+
+    public class ProductsViewModel
+    {
+        public List<Product> Products { get; set; }
     }
 }
