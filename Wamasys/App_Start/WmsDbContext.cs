@@ -5,19 +5,19 @@ using Wamasys.Models.Database;
 
 namespace Wamasys
 {
-    public class WmsDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>//DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>//DbContext
     {
 
 
-        public static WmsDbContext Create()
+        public static ApplicationDbContext Create()
         {
-            return new WmsDbContext();
+            return new ApplicationDbContext();
         }
 
 
-        public static void Seed(WmsDbContext wmsDbContext)
+        public static void Seed(ApplicationDbContext wmsDbContext)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }
