@@ -22,10 +22,5 @@ namespace Wamasys.Models
     public class ProductsViewModel
     {
         public List<Mongo.Product> Products { get; set; }
-
-        // Dump tester
-        public List<BsonElement> Dump { get; set; }
-
-        public List<BsonValue> Test { get; set; }
     }
 }
