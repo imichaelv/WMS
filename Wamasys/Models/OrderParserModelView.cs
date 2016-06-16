@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -10,7 +11,7 @@ namespace Wamasys.Models
 
         public void recieveOrder(string input)
         {
-            CustomerOrderViewModel customerOrder = new CustomerOrderViewModel();
+            MakeOrderModel customerOrder = new MakeOrderModel();
             customerOrder.StatusId = 1;
             XmlReader reader = XmlReader.Create(new StringReader(input));
 
@@ -23,20 +24,38 @@ namespace Wamasys.Models
                     switch (reader.Name)
                     {
                         case "custemorId":
-                            customerOrder.CompanyId = int.Parse(reader.Value);
+                            customerOrder.CustemorId = int.Parse(reader.Value);
+                            break;
+                        case "productId":
                             break;
                         case "amount":
-                            
+                            customerOrder.Amount = int.Parse(reader.Value);
+                            break;
+                        case "pricePerProduct ":
+                            customerOrder.pricePerProduct = int.Parse(reader.Value);
                             break;
                     }
                 }
             }
         }
+
+
+        public void InsertOrder(MakeOrderModel customerOrder)
+        {
+
+        }
     }
 
-    public void InsertOrder()
+    public class MakeOrderModel
     {
+        public int CustemorId { get; set; }
+        public int StatusId { get; set; }
+        public int ProductId { get; set; }
+        public int Amount { get; set; }
+        public double pricePerProduct { get; set; }
+        public DateTime datetime { get; set; }
 
     }
 }
-}
+
+

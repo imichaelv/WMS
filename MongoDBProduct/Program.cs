@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MongoDBProduct
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            MongoDBConnection connection = new MongoDBConnection();
+            var connection = new MongoDBConnection();
             connection.createConnection();
             
         }
