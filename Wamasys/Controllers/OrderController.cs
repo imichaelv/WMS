@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Wamasys.Models;
 using Wamasys.Models.Database;
@@ -14,6 +11,19 @@ namespace Wamasys.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Order(int? productId)
+        {
+            // TODO: implement query to get product information by product ID.
+
+            var model = new Models.Mongo.Product();
+            using (var db = new ApplicationDbContext())
+            {
+                // TODO: implement acquisition of data that corresponds to the product ID.
+            }
+
+            return View(model);
         }
 
         public ActionResult Orders()

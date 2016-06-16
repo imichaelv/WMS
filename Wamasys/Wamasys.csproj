@@ -216,6 +216,7 @@
     <Compile Include="Models\Database\SupplierOrder.cs" />
     <Compile Include="Models\ItemViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Mongo\Product.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\StatusViewModel.cs" />
@@ -435,6 +436,7 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\AddCustomerOrder.cshtml" />
     <Content Include="Views\Product\Products.cshtml" />
+    <Content Include="Views\Order\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
