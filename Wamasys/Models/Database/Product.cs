@@ -9,7 +9,6 @@ namespace Wamasys.Models.Database
 {
     public class Product
     {
-
         public Product()
         {
             Items = new HashSet<Item>();
