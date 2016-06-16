@@ -83,7 +83,17 @@ namespace Wamasys.Models
         }
     }
 
-    public class MakeOrderModel
+    /*
+    var user = UserManager.FindById(User.Identity.GetUserId());
+            using (var db = new BijlesportaalDbContext())
+            {
+                model.Students =
+                    new SelectList(db.Match.Where(row => row.GiverId == user.Id).Select(col => col.Taker).ToList(), "Id",
+                        "UserName");
+            }
+    */
+
+public class MakeOrderModel
     {
         public int CustemorId { get; set; }
         public int StatusId { get; set; }
