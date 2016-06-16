@@ -70,4 +70,6 @@ namespace Wamasys.Models
 
         public List<SupplierOrder> SupplierOrders { get; set; }
     }
+
+   
 }
