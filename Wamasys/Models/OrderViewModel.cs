@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Wamasys.Models.Database;
 
 namespace Wamasys.Models
@@ -19,17 +20,26 @@ namespace Wamasys.Models
         public int ProductId { get; set; }
     }
 
+    /// <summary>
+    /// Contains attributes for creating orders for suppliers.
+    /// </summary>
     public class CreateSupplierOrderViewModel
     {
         [Required]
-        public int Amount { get; set; }
+        [Range(1, 200, ErrorMessage = "Please enter a valid amount.")]
+        public int? Amount { get; set; }
 
         public Product Product { get; set; }
 
         /// <summary>
         /// Contains products that are available to order.
         /// </summary>
-        public List<Product> Products { get; set; }
+        [Display(Name = "Product")]
+        public SelectList Products { get; set; }
+
+        // Temporary though...
+        [Display(Name = "Product code")]
+        public int ProductCode { get; set; }
     }
 
     /// <summary>
@@ -49,7 +59,12 @@ namespace Wamasys.Models
 
     public class CreateCustomerOrderViewModel
     {
-        // TODO: implementation of class
+        // TODO: further implementation of class
+        public DateTime DateTime { get; set; }
+
+        public int CompanyId { get; set; }
+
+        public Company Company { get; set; }
     }
 
     public class OrderSummaryViewModel
@@ -57,5 +72,22 @@ namespace Wamasys.Models
         public List<CustomerOrder> CustomerOrders { get; set; }
 
         public List<SupplierOrder> SupplierOrders { get; set; }
+    }
+
+    /// <summary>
+    /// This class is developed for Robert.
+    /// </summary>
+    public class TestViewModel
+    {
+        public int CustomerId { get; set; }
+
+        public int OrderId { get; set; }
+
+        public DateTime DateTime { get; set; }
+
+        public Product Product { get; set; }
+
+        // If one can pick more products for the same order...
+        //public List<Product> Products { get; set; }
     }
 }
