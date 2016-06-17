@@ -22,7 +22,14 @@
                 <li class="list-group-item"><strong>Product code: </strong>@item.ProductId</li>
                 <li class="list-group-item"><strong>Supplier code: </strong>@item.SupplierId</li>
                 <li class="list-group-item">
-                    @Html.ActionLink("Order", "Products", new { id = item.ProductId }, new { @class = "btn btn-default" })
+                    @using (Html.BeginForm("Product", "Product", FormMethod.Get, new { role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="productId" value="@item.ProductId">
+                        <button type="submit" class="btn btn-default">
+                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp; More info
+                        </button>
+                    }
                 </li>
             </ul>
         </div>

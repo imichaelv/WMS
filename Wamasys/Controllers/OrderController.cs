@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MongoDB.Bson;
 using System.Web.Mvc;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using Wamasys.Models;
 using Wamasys.Models.Database;
 
@@ -7,24 +12,40 @@ namespace Wamasys.Controllers
 {
     public class OrderController : Controller
     {
+        protected static IMongoClient Client;
+        protected static IMongoDatabase Database;
+
+        public OrderController()
+        {
+            Client = new MongoClient();
+            Database = Client.GetDatabase("wamasys");
+        }
+
         // GET: Order
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Order(int? productId)
+        /*
+        public async Task<ActionResult> Order(int? productId)
         {
-            // TODO: implement query to get product information by product ID.
+            var collection = Database.GetCollection<BsonDocument>("products");
+            var result = await collection.FindAsync(Builders<BsonDocument>.Filter.Eq("product_id", productId.ToString()));
+            var document = result.FirstOrDefaultAsync().Result;
 
-            var model = new Models.Mongo.Product();
-            using (var db = new ApplicationDbContext())
+            var model = new Models.Mongo.Product
             {
-                // TODO: implement acquisition of data that corresponds to the product ID.
-            }
+                Name = document.GetValue("name").ToString(),
+                ProductId = document.GetValue("product_id").ToInt32(),
+                SupplierId = document.GetValue("supplier_id").ToInt32(),
+                Description = document.GetValue("description").ToString(),
+                Attributes = document.AsBsonDocument
+            };
 
             return View(model);
         }
+        */
 
         public ActionResult Orders()
         {
