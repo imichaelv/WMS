@@ -49,13 +49,20 @@ namespace Wamasys.Controllers
             }
         }
 
-        public  List<CustomerOrder> GetCustomerOrder(int customerId)
+        public List<CustomerOrder> GetCustomerOrder(int customerId)
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.CustomerOrder.Where(row => row.CompanyId == customerId).ToList(); 
+                return db.CustomerOrder.Where(row => row.CompanyId == customerId).ToList();
             }
-        
+        }
+
+        public Item GetItem(int itemId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.Item.FirstOrDefault(row => row.ItemId == itemId);
+            }
         }
     }
 }
