@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Wamasys.Models;
 using Wamasys.Models.Database;
 
 namespace Wamasys.Controllers
@@ -33,19 +34,28 @@ namespace Wamasys.Controllers
                 int stopPoint = model.Amount;
                 foreach (Item item in items)
                 {
-                    
-                        item.GantryId = 0;
-                        item.CustomerOrderId = customerOrder.CustomerOrderid;
-                        stopPoint--;
-                        if (stopPoint == 0)
-                        {
-                            break;
-                        }
-                    
+
+                    item.GantryId = 0;
+                    item.CustomerOrderId = customerOrder.CustomerOrderid;
+                    stopPoint--;
+                    if (stopPoint == 0)
+                    {
+                        break;
+                    }
+
                 }
 
                 await db.SaveChangesAsync();
             }
+        }
+
+        public  List<CustomerOrder> GetCustomerOrder(int customerId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.CustomerOrder.Where(row => row.CompanyId == customerId).ToList(); 
+            }
+        
         }
     }
 }
