@@ -23,6 +23,7 @@ namespace Wamasys.Models
             return 1;
         }
 
+        /*
         public void recieveOrder(string input)
         {
             MakeOrderModel customerOrder = new MakeOrderModel();
@@ -52,6 +53,7 @@ namespace Wamasys.Models
                 }
             }
         }
+        */
 
         [HttpPost]
         [Authorize]
