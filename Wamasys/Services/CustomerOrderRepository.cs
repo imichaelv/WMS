@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Wamasys.Models;
+using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 
 namespace Wamasys.Controllers
@@ -16,35 +17,37 @@ namespace Wamasys.Controllers
             return 1;
         }
 
-        public async void InsertCustomerOrder(MakeOrderModel model)
+        public async void InsertCustomerOrder(OrderApiModel model)
         {
             using (var db = new ApplicationDbContext())
             {
-                List<Item> items = new List<Item>();
-
-                items = db.Item.Where(row => row.CustomerOrderId == 0).ToList();
                 var customerOrder = new CustomerOrder();
-
-
-                customerOrder.CustomerOrderid = NextOrderId;
-                NextOrderId++;
-                customerOrder.Company.CompanyId = model.CustemorId;
-                customerOrder.Date = model.datetime;
+                customerOrder.Company.CompanyId = model.CustomerId;
+                customerOrder.Date = model.DateTime;
                 customerOrder.Status.StatusId = model.StatusId;
-                int stopPoint = model.Amount;
-                foreach (Item item in items)
+                await db.SaveChangesAsync();
+            }
+            using (var db = new ApplicationDbContext())
+            {
+                UpdateItems(db.CustomerOrder.Max(row => row.CustomerOrderid), model.Orders);
+            }
+        }
+
+        private async void UpdateItems(int orderId, List<Order> orders)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                foreach(Order order in orders)
                 {
-
-                    item.GantryId = 0;
-                    item.CustomerOrderId = customerOrder.CustomerOrderid;
-                    stopPoint--;
-                    if (stopPoint == 0)
+                    List<Item> items = new List<Item>();
+                    items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
+                    foreach (Item item in items)
                     {
-                        break;
+                        item.GantryId = 0;
+                        item.CustomerOrderId = orderId;
                     }
-
                 }
-
+                
                 await db.SaveChangesAsync();
             }
         }

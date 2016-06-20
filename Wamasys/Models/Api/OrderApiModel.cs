@@ -11,12 +11,17 @@ namespace Wamasys.Models.Api
 
         public int StatusId { get; set; }
 
-        public int ProductId { get; set; }
-
-        public int Amount { get; set; }
-
-        public double PricePerProduct { get; set; }
+        public List<Order> Orders { get; set; }
 
         public DateTime DateTime { get; set; }
     }
+
+    public class Order
+    {
+        public int ProductId { get; set; }
+        public int Amount { get; set; }
+        public double PricePerProduct { get; set; }
+    }
+
+    
 }
