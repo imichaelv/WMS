@@ -5,6 +5,17 @@ using System.Text;
 using System.Web.Mvc;
 using System.Xml;
 using Wamasys.Models.Database;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
+using Microsoft.Ajax.Utilities;
 
 namespace Wamasys.Models
 {
@@ -63,8 +74,10 @@ namespace Wamasys.Models
             using (var db = new ApplicationDbContext())
             {
                 List<Item> items = new List<Item>();
-                db.
+               
+                items = db.Item.Where(row => row.CustomerOrderId == 0).ToList();
                 var customerOrder = new CustomerOrder();
+
 
                 customerOrder.CustomerOrderid = NextOrderId;
                 NextOrderId++;
@@ -85,6 +98,8 @@ namespace Wamasys.Models
                         }
                     }
                 }
+                
+                await db.SaveChangesAsync();
             }
         }
     }
@@ -99,16 +114,7 @@ namespace Wamasys.Models
             }
     */
 
-public class MakeOrderModel
-    {
-        public int CustemorId { get; set; }
-        public int StatusId { get; set; }
-        public int ProductId { get; set; }
-        public int Amount { get; set; }
-        public double pricePerProduct { get; set; }
-        public DateTime datetime { get; set; }
-
-    }
+   
 }
 
 
