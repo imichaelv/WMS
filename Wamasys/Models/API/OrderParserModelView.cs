@@ -60,25 +60,29 @@ namespace Wamasys.Models
         [ValidateAntiForgeryToken]
         public async void InsertOrder(MakeOrderModel model)
         {
-            List<Item> items = new List<Item>();
-            var customerOrder = new CustomerOrder();
-
-            customerOrder.CustomerOrderid = NextOrderId;
-            NextOrderId++;
-            customerOrder.Company.CompanyId = model.CustemorId;
-            customerOrder.Date = model.datetime;
-            customerOrder.Status.StatusId = model.StatusId;
-            int stopPoint = model.Amount;
-            foreach(Item item in items)
+            using (var db = new ApplicationDbContext())
             {
-                if(item.CustomerOrderId == 0)
+                List<Item> items = new List<Item>();
+                db.
+                var customerOrder = new CustomerOrder();
+
+                customerOrder.CustomerOrderid = NextOrderId;
+                NextOrderId++;
+                customerOrder.Company.CompanyId = model.CustemorId;
+                customerOrder.Date = model.datetime;
+                customerOrder.Status.StatusId = model.StatusId;
+                int stopPoint = model.Amount;
+                foreach (Item item in items)
                 {
-                    item.GantryId = 0;
-                    item.CustomerOrderId = customerOrder.CustomerOrderid;
-                    stopPoint--;
-                    if(stopPoint == 0)
+                    if (item.CustomerOrderId == 0)
                     {
-                        break;
+                        item.GantryId = 0;
+                        item.CustomerOrderId = customerOrder.CustomerOrderid;
+                        stopPoint--;
+                        if (stopPoint == 0)
+                        {
+                            break;
+                        }
                     }
                 }
             }
