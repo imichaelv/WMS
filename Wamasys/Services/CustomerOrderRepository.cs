@@ -48,15 +48,4 @@ namespace Wamasys.Controllers
             }
         }
     }
-
-    public class MakeOrderModel
-    {
-        public int CustemorId { get; set; }
-        public int StatusId { get; set; }
-        public int ProductId { get; set; }
-        public int Amount { get; set; }
-        public double pricePerProduct { get; set; }
-        public DateTime datetime { get; set; }
-
-    }
 }
