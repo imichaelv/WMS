@@ -24,36 +24,41 @@ namespace Wamasys.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            return View();
+            return View("Products");
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Product(int? productId)
+        /// <summary>
+        /// Displays product information and
+        /// allows the user to order a certain amount of products.
+        /// </summary>
+        /// <param name="id">The ID of the product.</param>
+        /// <returns></returns>
+        public async Task<ActionResult> Product(int? id)
         {
-            if (!productId.HasValue)
+            if (!id.HasValue)
             {
                 return View("Products");
             }
 
             var collection = Database.GetCollection<BsonDocument>("products");
-            var filter = Builders<BsonDocument>.Filter.Eq("product_id", productId);
+            var filter = Builders<BsonDocument>.Filter.Eq("product_id", id);
             var result = await collection.Find(filter).FirstOrDefaultAsync();
 
-            var attributes = result.GetValue("attributes").ToBsonDocument();
+            var attributes = result.GetValue("attributes").ToBsonDocument().Values.ToList();
 
             var product = new Product
             {
                 Name = result.GetValue("name").ToString(),
                 Description = result.GetValue("description").ToString(),
                 SupplierId = result.GetValue("supplier_id").ToInt32(),
-                Attributes = new List<BsonValue>(),
-                ProductId = productId.Value
+                Attributes = attributes,
+                ProductId = id.Value
             };
 
             var model = new ProductViewModel
             {
                 Product = product,
-                PropertyId = productId.Value
+                PropertyId = id.Value
             };
 
 
@@ -77,7 +82,7 @@ namespace Wamasys.Controllers
                     // Batch contains a random amount of products...
                     var batch = cursor.Current;
                     // Limit the amount of products per batch...
-                    batch = batch.Take(20);
+                    batch = batch.Take(5);
                     foreach (var document in batch)
                     {
                         var product = new Product

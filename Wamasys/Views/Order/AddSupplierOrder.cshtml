@@ -36,7 +36,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Products, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.ListBox("productId", Model.Products, new { @class = "selectpicker", title = "Selecteer niveau", data_size = "10", data_live_search = "true", data_max_options = "1" })
+                        @Html.ListBox("id", Model.Products, new { @class = "selectpicker", title = "Selecteer niveau", data_size = "10", data_live_search = "true", data_max_options = "1" })
                         <!-- @Html.ValidationMessageFor(model => model.Products, "", new { @class = "text-danger" }) -->
                     </div>
                 </div>
