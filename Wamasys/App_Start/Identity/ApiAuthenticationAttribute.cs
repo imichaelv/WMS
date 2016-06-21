@@ -12,7 +12,6 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Filters;
 using System.Web.Http.Results;
-using Wamasys.Models.Database;
 
 namespace Wamasys.Identity
 {
@@ -85,6 +84,11 @@ namespace Wamasys.Identity
                     return false;
                 }
 
+                if (keyObject.Disabled)
+                {
+                    return false;
+                }
+
                 if (IsReplayRequest(nonce, requestTimeStamp))
                 {
                     return false;
@@ -97,8 +101,7 @@ namespace Wamasys.Identity
                     requestContentBase64String = Convert.ToBase64String(hash);
                 }
 
-                var data = String.Format("{0}{1}{2}{3}{4}{5}", APPId, requestHttpMethod, requestUri, requestTimeStamp,
-                    nonce, requestContentBase64String);
+                var data = String.Format("{0}{1}{2}{3}{4}{5}", APPId, requestHttpMethod, requestUri, requestTimeStamp, nonce, requestContentBase64String);
 
                 var secretKeyBytes = Convert.FromBase64String(keyObject.SecretKey);
 
@@ -108,8 +111,7 @@ namespace Wamasys.Identity
                 {
                     var signatureBytes = hmac.ComputeHash(signature);
 
-                    return
-                        (incomingBase64Signature.Equals(Convert.ToBase64String(signatureBytes), StringComparison.Ordinal));
+                    return (incomingBase64Signature.Equals(Convert.ToBase64String(signatureBytes), StringComparison.Ordinal));
                 }
             }
         }
@@ -122,9 +124,11 @@ namespace Wamasys.Identity
             }
 
             var epochStart = new DateTime(1970, 01, 01, 0, 0, 0, 0, DateTimeKind.Utc);
+
             var currentTs = DateTime.UtcNow - epochStart;
 
             var serverTotalSeconds = Convert.ToUInt64(currentTs.TotalSeconds);
+
             var requestTotalSeconds = Convert.ToUInt64(requestTimeStamp);
 
             if ((serverTotalSeconds - requestTotalSeconds) > RequestMaxAgeInSeconds)
@@ -154,21 +158,21 @@ namespace Wamasys.Identity
 
     public class ResultWithChallenge : IHttpActionResult
     {
-        private readonly string authenticationScheme = "amx";
-        private readonly IHttpActionResult next;
+        private const string AuthenticationScheme = "amx";
+        private readonly IHttpActionResult _next;
 
         public ResultWithChallenge(IHttpActionResult next)
         {
-            this.next = next;
+            _next = next;
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
-            var response = await next.ExecuteAsync(cancellationToken);
+            var response = await _next.ExecuteAsync(cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(authenticationScheme));
+                response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(AuthenticationScheme));
             }
 
             return response;
