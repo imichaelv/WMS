@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Wamasys.Models.Database;
 
 namespace Wamasys.Controllers
 {
@@ -26,24 +28,6 @@ namespace Wamasys.Controllers
         public ActionResult Contact()
         {
             return View();
-        }
-
-        public ActionResult ApiKeys()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateApiKey()
-        {
-            using (var cryptoProvider = new RNGCryptoServiceProvider())
-            {
-                byte[] secretKeyByteArray = new byte[32]; //256 bit
-                cryptoProvider.GetBytes(secretKeyByteArray);
-                var APIKey = Convert.ToBase64String(secretKeyByteArray);
-
-            }
         }
     }
 }

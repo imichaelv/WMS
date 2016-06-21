@@ -36,9 +36,8 @@
     </tbody>
 </table>
 
-@using (Html.BeginForm("CreateApiKey", "Home", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm("CreateApiKey", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
 {
     @Html.AntiForgeryToken()
-    <button type="submit" class="list-group-item" name="targetId" value="@contact.Id">@contact.FirstName @contact.LastName</button>
-
+    <button type="submit" class="list-group-item" name="targetId">Nieuwe sleutel</button>
 }

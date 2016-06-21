@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -427,6 +428,38 @@ namespace Wamasys.Controllers
             base.Dispose(disposing);
         }
 
+        public ActionResult ApiKeys()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateApiKey()
+        {
+            using (var cryptoProvider = new RNGCryptoServiceProvider())
+            {
+                var secretKeyByteArray = new byte[32]; //256 bit
+                cryptoProvider.GetBytes(secretKeyByteArray);
+                var apiKey = Convert.ToBase64String(secretKeyByteArray);
+
+                using (var db = new ApplicationDbContext())
+                {
+                    var newKey = new ApiKey
+                    {
+                        UserId = User.Identity.GetUserId(),
+                        Created = DateTime.Now,
+                        Disabled = false,
+                        SecretKey = apiKey
+                    };
+
+                    db.ApiKeys.Add(newKey);
+                    await db.SaveChangesAsync();
+                }
+            }
+            return ApiKeys();
+        }
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -486,4 +519,5 @@ namespace Wamasys.Controllers
         }
         #endregion
     }
+
 }
