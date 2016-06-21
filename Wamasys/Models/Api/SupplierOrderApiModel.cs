@@ -14,8 +14,7 @@ namespace Wamasys.Models.Api
         public int ProductId { get; set; }
 
         public int Amount { get; set; }
-
-        public double PricePerProduct { get; set; }
+        
 
         public DateTime datetime { get; set; }
     }
