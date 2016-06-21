@@ -1,0 +1,44 @@
+﻿@model Wamasys.Models.ApiKeyViewModel
+@{
+    ViewBag.Title = "Api Keys";
+}
+
+<h2>Api Keys</h2>
+<p>All your API keys</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>App Id</th>
+        <th>Api Key</th>
+        <th>Creation date</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        if (Model.ApiKeys.Count == 0)
+        {
+            <tr>
+                <td>Er zijn momenteel geen verzoeken</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var key in Model.ApiKeys)
+            {
+                <tr>
+                    <td>@key.ApiKeyId</td>
+                    <td>@key.SecretKey</td>
+                    <td>@key.Created.ToString("dd-MM-yyyy")</td>
+                </tr>
+            }
+        }
+    }
+    </tbody>
+</table>
+
+@using (Html.BeginForm("CreateApiKey", "Home", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="list-group-item" name="targetId" value="@contact.Id">@contact.FirstName @contact.LastName</button>
+
+}

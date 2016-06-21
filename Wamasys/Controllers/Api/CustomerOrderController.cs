@@ -4,10 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Wamasys.Identity;
 using Wamasys.Models.Api;
 
 namespace Wamasys.Controllers.api
 {
+    [ApiAuthentication]
     public class CustomerOrderController : ApiController
     {
         // GET api/<controller>

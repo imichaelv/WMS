@@ -14,7 +14,7 @@ namespace Wamasys.Models.Database
     {
         public ApplicationUser()
         {
-
+            ApiKeys = new HashSet<ApiKey>();
         }
 
         public string FirstName { get; set; }
@@ -30,6 +30,8 @@ namespace Wamasys.Models.Database
 
         [ForeignKey("SupplierId")]
         public virtual Supplier Supplier { get; set; }
+
+        public virtual ICollection<ApiKey> ApiKeys { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

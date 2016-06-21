@@ -17,6 +17,7 @@ namespace Wamasys
         public DbSet<Status> Status { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<SupplierOrder> SupplierOrder { get; set; }
+        public DbSet<ApiKey> ApiKeys { get; set; }
 
         public ApplicationDbContext() : base("databasenaam")
         {
