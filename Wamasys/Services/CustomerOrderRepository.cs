@@ -10,7 +10,7 @@ namespace Wamasys.Controllers
 {
     public class CustomerOrderController : ApiController
     {
-        
+
         public async void InsertCustomerOrder(OrderApiModel model)
         {
             using (var db = new ApplicationDbContext())
@@ -31,7 +31,7 @@ namespace Wamasys.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                foreach(Order order in orders)
+                foreach (Order order in orders)
                 {
                     List<Item> items = new List<Item>();
                     items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
@@ -58,6 +58,15 @@ namespace Wamasys.Controllers
             using (var db = new ApplicationDbContext())
             {
                 return db.Item.FirstOrDefault(row => row.ItemId == itemId);
+            }
+        }
+
+        public string GetStatus(int orderId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                CustomerOrder customerOrder = db.CustomerOrder.Where(row => row.CustomerOrderid == orderId).FirstOrDefault();
+                return db.Status.Where(row => row.StatusId == customerOrder.StatusId).FirstOrDefault().Name;
             }
         }
     }
