@@ -194,7 +194,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomerOrderController.cs" />
     <Compile Include="Models\ApiKeyViewModel.cs" />
+    <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\OrderApiModel.cs" />
+    <Compile Include="Models\Api\SupplierOrderApiModel.cs" />
     <Compile Include="Models\Database\ApiKey.cs" />
     <Compile Include="Services\CustomerOrderRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />

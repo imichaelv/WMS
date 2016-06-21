@@ -27,11 +27,11 @@ namespace Wamasys.Controllers
             }
         }
 
-        private async void UpdateItems(int orderId, List<Order> orders)
+        private async void UpdateItems(int orderId, List<OrderModel> orders)
         {
             using (var db = new ApplicationDbContext())
             {
-                foreach (Order order in orders)
+                foreach (OrderModel order in orders)
                 {
                     List<Item> items = new List<Item>();
                     items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
