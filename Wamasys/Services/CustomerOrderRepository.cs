@@ -10,13 +10,7 @@ namespace Wamasys.Controllers
 {
     public class CustomerOrderController : ApiController
     {
-        public int NextOrderId;
-
-        public int getNextOrderId()
-        {
-            return 1;
-        }
-
+        
         public async void InsertCustomerOrder(OrderApiModel model)
         {
             using (var db = new ApplicationDbContext())
@@ -47,7 +41,6 @@ namespace Wamasys.Controllers
                         item.CustomerOrderId = orderId;
                     }
                 }
-                
                 await db.SaveChangesAsync();
             }
         }
