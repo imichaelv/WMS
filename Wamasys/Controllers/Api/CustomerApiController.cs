@@ -110,8 +110,8 @@ namespace Wamasys.Controllers.api
             using (var repo = new CustomerOrderRepository())
             {
                 
-                var result = repo.ChangeStatus(repo.GetCustomerOrder(model.OrderId), "Afgeleverd");
-                if (!result.Result)
+                var result = await repo.ChangeStatus(repo.GetCustomerOrder(model.OrderId), "Afgeleverd");
+                if (!result)
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
                     {

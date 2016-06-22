@@ -3,32 +3,41 @@ using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 using System.Linq;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Web.Http;
 
 namespace Wamasys.Services
 {
     public class SupplierOrdersRepository : ApiController
     {
-        public async void InsertSupplierOrder(SupplierOrder[] order)
+        public async void InsertSupplierOrder(SupplierOrder order)
         {
             using (var db = new ApplicationDbContext())
             {
-                var supplierOrder = new SupplierOrder
-                {
-                    Amount = order.Amount,
-                    ProductId = order.ProductId,
-                    StatusId = order.StatusId
-                };
+                db.SupplierOrder.Add(order);
                 await db.SaveChangesAsync();
             }
         }
 
-        public List<SupplierOrder> GetCurrentOrders(int productId)
+        public List<SupplierOrderModel> GetCurrentOrders(int limit)
         {
             using (var db = new ApplicationDbContext())
             {
-                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd") && row.ProductId == productId).ToList();
-                return orders;
+                IQueryable<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId == GetStatusId("In behandeling")).Take(5);
+                List<SupplierOrderModel> newOrders = new List<SupplierOrderModel>();
+
+                foreach (var order in orders)
+                {
+                    var convertedOrder = new SupplierOrderModel
+                    {
+                        ProductId = order.ProductId,
+                        OrderId = order.SupplierOrderId,
+                        Amount = order.Amount
+                    };
+                    newOrders.Add(convertedOrder);
+                }
+                return newOrders;
             }
         }
 
@@ -84,7 +93,7 @@ namespace Wamasys.Services
             }
         }
 
-        public int GetStatusId( string statusName)
+        public int GetStatusId(string statusName)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -116,12 +125,6 @@ namespace Wamasys.Services
                 }
                 await db.SaveChangesAsync();
             }
-        }
-
-       
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

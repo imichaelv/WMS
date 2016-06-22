@@ -193,6 +193,7 @@
     <Compile Include="App_Start\WmsDbContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomerApiController.cs" />
+    <Compile Include="Controllers\Api\ProductApiController.cs" />
     <Compile Include="Controllers\Api\ProducerApiController.cs" />
     <Compile Include="Models\ApiKeyViewModel.cs" />
     <Compile Include="Models\Api\DeliveryModel.cs" />
