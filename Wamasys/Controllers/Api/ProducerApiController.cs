@@ -5,9 +5,8 @@ using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 using Wamasys.Services;
 
-namespace Wamasys.Controllers.Api
+namespace Wamasys.Controllers
 {
-    [RoutePrefix("api/Supplier")]
     [ApiAuthentication]
     public class ProducerApiController : ApiController
     {

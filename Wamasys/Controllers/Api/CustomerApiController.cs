@@ -8,7 +8,7 @@ using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 using Wamasys.Services;
 
-namespace Wamasys.Controllers.api
+namespace Wamasys.Controllers
 {
     [RoutePrefix("api/Order")]
     [ApiAuthentication]
@@ -77,7 +77,6 @@ namespace Wamasys.Controllers.api
         }
     }
 
-    [RoutePrefix("api/OrderStatus")]
     [ApiAuthentication]
     public class OrderStatusController : ApiController
     {
