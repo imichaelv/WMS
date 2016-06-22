@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Wamasys.Models.Api;
 using Wamasys.Models.Database;
@@ -9,39 +10,50 @@ namespace Wamasys.Services
 {
     public class CustomerOrderRepository : ApiController
     {
-        public async void InsertCustomerOrder(OrderModel model)
+
+        public async Task<bool> InsertCustomerOrder(OrderModel model)
         {
             using (var db = new ApplicationDbContext())
             {
                 var customerOrder = new CustomerOrder();
+                customerOrder.CustomerOrderid = db.CustomerOrder.Max(row => row.CustomerOrderid) + 1;
                 customerOrder.Company.CompanyId = model.CustomerId;
                 customerOrder.Date = model.DateTime;
                 customerOrder.Status.StatusId = GetStatusId("Nieuwe bestelling");
+                bool succes = await UpdateItems(customerOrder, model.Products.ToList(), db);
+                if (succes)
+                {
                 await db.SaveChangesAsync();
+                    return succes;
             }
-            using (var db = new ApplicationDbContext())
-            {
-                UpdateItems(db.CustomerOrder.Max(row => row.CustomerOrderid), model.Orders);
+                return succes;
             }
         }
 
-        private async void UpdateItems(int orderId, List<ProductModel> orders)
+        private async Task<bool> UpdateItems(CustomerOrder customerOrder, List<ProductModel> orders, ApplicationDbContext db)
         {
-            using (var db = new ApplicationDbContext())
+            using (db)
             {
                 foreach (var order in orders)
                 {
                     var items = new List<Item>();
                     items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
-                    foreach (var item in items)
+                    if(order.Amount < items.Count)
+                    {
+                        return false;
+                    }
+                    foreach (Item item in items)
                     {
                         item.GantryId = 0;
-                        item.CustomerOrderId = orderId;
+                        item.CustomerOrderId = customerOrder.CustomerOrderid;
+                        item.CustomerOrder = customerOrder;
                     }
                 }
                 await db.SaveChangesAsync();
             }
+            return true;
         }
+
 
         public List<CustomerOrder> GetCustomerOrders(int customerId)
         {
@@ -83,7 +95,7 @@ namespace Wamasys.Services
             }
         }
 
-        public async void ChangeStatus(CustomerOrder order, string newStatus)
+        public async Task<bool> ChangeStatus(CustomerOrder order, string newStatus)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -96,6 +108,7 @@ namespace Wamasys.Services
                 }
                 await db.SaveChangesAsync();
             }
+            return true;
         }
 
         public int GetStatusId(string description)

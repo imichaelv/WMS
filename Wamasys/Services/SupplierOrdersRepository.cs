@@ -36,13 +36,13 @@ namespace Wamasys.Services
         //  This methode should be invoked AFTER the list has been given to the requesting entitiy.
         // This is because if would still be the same objects beeing used.
         //</summary>
-        public async void UpdateOrders(List<SupplierOrder> orders, int newStatus)
+        public async void UpdateOrders(List<SupplierOrder> orders, string newStatus)
         {
             using (var db = new ApplicationDbContext())
             {
                 foreach (var order in orders)
                 {
-                    order.StatusId = newStatus;
+                    order.StatusId = GetStatusId(newStatus);
                 }
                 await db.SaveChangesAsync();
             }
@@ -54,10 +54,10 @@ namespace Wamasys.Services
             {
                 var supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == SupplierOrderId);
                 if (supplierOrder?.Status != null)
-                {
-                    return supplierOrder.Status.Name;
+                    {
+                        return supplierOrder.Status.Name;
+                    }
                 }
-            }
             return "Error";
         }
 
@@ -109,7 +109,7 @@ namespace Wamasys.Services
             }
         }
 
-
+       
         public void Dispose()
         {
             throw new NotImplementedException();
