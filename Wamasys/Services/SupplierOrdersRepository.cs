@@ -7,7 +7,7 @@ namespace Wamasys.Services
 {
     public class SupplierOrdersRepository
     {
-        public async void InsertSupplierOrder(SupplierOrderApiModel order)
+        public async void InsertSupplierOrder(SupplierOrderModel order)
         {
             using (var db = new ApplicationDbContext())
             {

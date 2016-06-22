@@ -5,12 +5,12 @@ using System.Web.Http;
 using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 
-namespace Wamasys.Controllers
+namespace Wamasys.Services
 {
-    public class CustomerOrderController : ApiController
+    public class CustomerOrderRepository : ApiController
     {
 
-        public async void InsertCustomerOrder(OrderApiModel model)
+        public async void InsertCustomerOrder(OrderModel model)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -27,11 +27,11 @@ namespace Wamasys.Controllers
             }
         }
 
-        private async void UpdateItems(int orderId, List<OrderModel> orders)
+        private async void UpdateItems(int orderId, List<ProductModel> orders)
         {
             using (var db = new ApplicationDbContext())
             {
-                foreach (OrderModel order in orders)
+                foreach (ProductModel order in orders)
                 {
                     List<Item> items = new List<Item>();
                     items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
@@ -45,11 +45,19 @@ namespace Wamasys.Controllers
             }
         }
 
-        public List<CustomerOrder> GetCustomerOrder(int customerId)
+        public List<CustomerOrder> GetCustomerOrders(int customerId)
         {
             using (var db = new ApplicationDbContext())
             {
                 return db.CustomerOrder.Where(row => row.CompanyId == customerId).ToList();
+            }
+        }
+
+        public CustomerOrder GetCustomerOrder(int orderId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
             }
         }
 
@@ -65,7 +73,6 @@ namespace Wamasys.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-
                 CustomerOrder customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
                 if (customerOrder != null)
                 {
@@ -96,7 +103,7 @@ namespace Wamasys.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.Status.Where(row => row.Name == description).FirstOrDefault().StatusId;
+                return db.Status.FirstOrDefault(row => row.Name == description).StatusId;
             }
         }
     }

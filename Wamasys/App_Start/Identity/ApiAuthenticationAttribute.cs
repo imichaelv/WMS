@@ -63,7 +63,7 @@ namespace Wamasys.Identity
             get { return false; }
         }
 
-        private string[] GetAutherizationHeaderValues(string rawAuthzHeader)
+        public static string[] GetAutherizationHeaderValues(string rawAuthzHeader)
         {
             var credArray = rawAuthzHeader.Split(':');
             return credArray.Length == 4 ? credArray : null;

@@ -4,37 +4,34 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Wamasys.Identity;
-using Wamasys.Models.Api;
 
-namespace Wamasys.Controllers.api
+namespace Wamasys.Controllers.Api
 {
-    [ApiAuthentication]
-    public class CustomerOrderController : ApiController
+    public class ProducerApiController : ApiController
     {
-        // GET api/<controller>
+        // GET: api/Test
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
+        // GET: api/Test/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<controller>
-        public void Post(OrderApiModel model)
+        // POST: api/Test
+        public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, OrderApiModel model)
+        // PUT: api/Test/5
+        public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/<controller>/5
+        // DELETE: api/Test/5
         public void Delete(int id)
         {
         }

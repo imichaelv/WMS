@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Wamasys.Models.Api
 {
-    public class SupplierOrderApiModel
+    public class SupplierOrderModel
     {
         public int SupplierId { get; set; }
 
@@ -14,8 +14,7 @@ namespace Wamasys.Models.Api
         public int ProductId { get; set; }
 
         public int Amount { get; set; }
-        
 
-        public DateTime datetime { get; set; }
+        public DateTime Datetime { get; set; }
     }
 }
