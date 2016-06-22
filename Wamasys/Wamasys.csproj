@@ -195,6 +195,7 @@
     <Compile Include="Controllers\Api\CustomerApiController.cs" />
     <Compile Include="Controllers\Api\ProducerApiController.cs" />
     <Compile Include="Models\ApiKeyViewModel.cs" />
+    <Compile Include="Models\Api\DeliveryModel.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\OrderStatusModel.cs" />
     <Compile Include="Models\Api\ProductModel.cs" />

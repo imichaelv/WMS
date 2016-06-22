@@ -23,9 +23,9 @@ namespace Wamasys.Services
                 bool succes = await UpdateItems(customerOrder, model.Products.ToList(), db);
                 if (succes)
                 {
-                    await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
                     return succes;
-                }
+            }
                 return succes;
             }
         }
@@ -34,10 +34,9 @@ namespace Wamasys.Services
         {
             using (db)
             {
-                
-                foreach (ProductModel order in orders)
+                foreach (var order in orders)
                 {
-                    List<Item> items = new List<Item>();
+                    var items = new List<Item>();
                     items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
                     if(order.Amount < items.Count)
                     {
@@ -54,7 +53,7 @@ namespace Wamasys.Services
             }
             return true;
         }
-        
+
 
         public List<CustomerOrder> GetCustomerOrders(int customerId)
         {
@@ -84,7 +83,7 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                CustomerOrder customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
+                var customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
                 if (customerOrder != null)
                 {
                     if (customerOrder.Status != null)
@@ -100,7 +99,8 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
+
+                var status = db.Status.FirstOrDefault(row => row.Name == newStatus);
                 if (status != null)
                 {
                     order.Status = status;

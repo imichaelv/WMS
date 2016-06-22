@@ -1,20 +1,24 @@
-﻿using Wamasys.Models.Api;
+﻿using System;
+using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 using System.Linq;
 using System.Collections.Generic;
+using System.Web.Http;
 
 namespace Wamasys.Services
 {
-    public class SupplierOrdersRepository
+    public class SupplierOrdersRepository : ApiController
     {
-        public async void InsertSupplierOrder(SupplierOrderModel order)
+        public async void InsertSupplierOrder(SupplierOrder[] order)
         {
             using (var db = new ApplicationDbContext())
             {
-                var supplierOrder = new SupplierOrder();
-                supplierOrder.Amount = order.Amount;
-                supplierOrder.ProductId = order.ProductId;
-                supplierOrder.StatusId = GetStatusId("Nieuwe bestelling");
+                var supplierOrder = new SupplierOrder
+                {
+                    Amount = order.Amount,
+                    ProductId = order.ProductId,
+                    StatusId = order.StatusId
+                };
                 await db.SaveChangesAsync();
             }
         }
@@ -64,7 +68,7 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                foreach (SupplierOrder order in orders)
+                foreach (var order in orders)
                 {
                     order.StatusId = GetStatusId(newStatus);
                 }
@@ -76,15 +80,12 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                SupplierOrder supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == SupplierOrderId);
-                if (supplierOrder != null)
-                {
-                    if (supplierOrder.Status != null)
+                var supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == SupplierOrderId);
+                if (supplierOrder?.Status != null)
                     {
                         return supplierOrder.Status.Name;
                     }
                 }
-            }
             return "Error";
         }
 
@@ -107,7 +108,7 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                Status status = db.Status.FirstOrDefault(row => row.Name == statusName);
+                var status = db.Status.FirstOrDefault(row => row.Name == statusName);
                 if(status != null)
                 {
                     return status.StatusId;
@@ -120,15 +121,17 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                List<Item> usedGantrys = db.Item.Where(row => row.GantryId != 0).ToList();
-                List<Gantry> gantry = db.Gantry.Where(row => !usedGantrys.Any(row2 => row2.GantryId == row.GantryId)).ToList();
-                for (int i = 0; i < amount; i++)
+                var usedGantrys = db.Item.Where(row => row.GantryId != 0).ToList();
+                var gantry = db.Gantry.Where(row => usedGantrys.All(row2 => row2.GantryId != row.GantryId)).ToList();
+                for (var i = 0; i < amount; i++)
                 {
-                    Gantry tobeStored = gantry.FirstOrDefault();
-                    Item item = new Item();
-                    item.ProductId = productId;
-                    item.CustomerOrderId = 0;
-                    item.GantryId = tobeStored.GantryId;
+                    var tobeStored = gantry.FirstOrDefault();
+                    var item = new Item
+                    {
+                        ProductId = productId,
+                        CustomerOrderId = 0,
+                        GantryId = tobeStored.GantryId
+                    };
                     gantry.Remove(tobeStored);
                 }
                 await db.SaveChangesAsync();
@@ -136,5 +139,9 @@ namespace Wamasys.Services
         }
 
        
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
