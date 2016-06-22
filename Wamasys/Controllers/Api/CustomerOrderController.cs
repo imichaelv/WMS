@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
 using Wamasys.Identity;
 using Wamasys.Models.Api;
 using Wamasys.Models.Database;
@@ -11,28 +10,93 @@ using Wamasys.Services;
 
 namespace Wamasys.Controllers.api
 {
-    [RoutePrefix("api/checkOrder")]
+    [RoutePrefix("api/CheckOrder")]
     [ApiAuthentication]
     public class CustomerOrderController : ApiController
     {
-/*        // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-
-            return new string[] { "value1", "value2" };
-        }*/
-
         // GET api/<controller>/5
-        public CustomerOrder Get(int id)
+        public OrderModel Get(int id)
         {
             using (var repo = new CustomerOrderRepository())
             {
-                return repo.GetCustomerOrder(id);
+                var order = repo.GetCustomerOrder(id);
+                if (order?.Status == null)
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent($"No order with ID = {id}"),
+                        ReasonPhrase = "Order ID Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+
+                return new OrderModel
+                {
+                    CustomerId = order.CompanyId,
+                    OrderId = order.CustomerOrderid,
+                    DateTime = order.Date,
+                    Status = order.Status.Name,
+                    Products = ConvertProductModel(order.Items)
+                };
             }
         }
 
         // POST api/<controller>
-        public bool Post(OrderApiModel model)
+        public void Post(OrderModel model)
+        {
+            using (var repo = new CustomerOrderRepository())
+            {
+                repo.InsertCustomerOrder(model);
+            }
+        }
+
+        private ProductModel[] ConvertProductModel(ICollection<Item> items)
+        {
+            List<ProductModel> productsList = new List<ProductModel>();
+
+            foreach (var item in items)
+            {
+                productsList.Add(
+                    new ProductModel
+                    {
+                        ProductId = item.ProductId,
+                        Amount = items.Count(row => row.ProductId == item.ProductId)
+                    }
+                );
+            }
+            return productsList.ToArray();
+        }
+    }
+
+    [RoutePrefix("api/OrderStatus")]
+    [ApiAuthentication]
+    public class OrderStatusController : ApiController
+    {
+
+        public OrderStatusModel Get(int id)
+        {
+            using (var repo = new CustomerOrderRepository())
+            {
+                var order = repo.GetCustomerOrder(id);
+                if (order?.Status != null)
+                {
+                    return new OrderStatusModel
+                    {
+                        OrderId = order.CustomerOrderid,
+                        Status = order.Status.Name
+                    };
+                }
+
+                var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent($"No product with ID = {id}"),
+                    ReasonPhrase = "Product ID Not Found"
+                };
+                throw new HttpResponseException(resp);
+            }
+        }
+
+        public bool Post(OrderModel model)
         {
             using (var repo = new CustomerOrderRepository())
             {
@@ -40,15 +104,5 @@ namespace Wamasys.Controllers.api
             }
             return false;
         }
-
-        // PUT api/<controller>/5
-/*        public void Put(int id, OrderApiModel model)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }*/
     }
 }

@@ -1,8 +1,7 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using Wamasys.Models;
 using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 
@@ -11,7 +10,7 @@ namespace Wamasys.Services
     public class CustomerOrderRepository : ApiController
     {
 
-        public async void InsertCustomerOrder(OrderApiModel model)
+        public async void InsertCustomerOrder(OrderModel model)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -27,11 +26,11 @@ namespace Wamasys.Services
             }
         }
 
-        private async void UpdateItems(int orderId, List<OrderModel> orders)
+        private async void UpdateItems(int orderId, List<ProductModel> orders)
         {
             using (var db = new ApplicationDbContext())
             {
-                foreach (OrderModel order in orders)
+                foreach (ProductModel order in orders)
                 {
                     List<Item> items = new List<Item>();
                     items = db.Item.Where(row => row.CustomerOrderId == 0 && row.ProductId == order.ProductId).Take(order.Amount).ToList();
@@ -74,7 +73,34 @@ namespace Wamasys.Services
             using (var db = new ApplicationDbContext())
             {
                 CustomerOrder customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
-                return db.Status.Where(row => row.StatusId == customerOrder.StatusId).FirstOrDefault().Name;
+                if(customerOrder != null)
+                {
+                    if(customerOrder.Status != null)
+                    {
+                        return customerOrder.Status.Name;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public async void ChangeStatus(string newStatus)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                switch(newStatus)
+                {
+                    
+                        
+                }
+            }
+        }
+
+        public int GetStatusId(string description)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.Status.FirstOrDefault(row => row.Name == description).StatusId;
             }
         }
     }
