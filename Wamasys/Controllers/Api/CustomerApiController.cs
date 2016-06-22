@@ -10,7 +10,7 @@ using Wamasys.Services;
 
 namespace Wamasys.Controllers.api
 {
-    [RoutePrefix("api/CheckOrder")]
+    [RoutePrefix("api/Order")]
     [ApiAuthentication]
     public class CustomerApiController : ApiController
     {
