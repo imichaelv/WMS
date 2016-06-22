@@ -24,7 +24,7 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                IQueryable<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId == GetStatusId("In behandeling")).Take(5);
+                IQueryable<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId == GetStatusId("In behandeling")).Take(limit);
                 List<SupplierOrderModel> newOrders = new List<SupplierOrderModel>();
 
                 foreach (var order in orders)
@@ -41,12 +41,20 @@ namespace Wamasys.Services
             }
         }
 
+        public List<SupplierOrder> GetCurrentOrder(int productId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd") && row.ProductId == productId).ToList();
+            }
+        }
+
         public void SeeIfWeNeedAnyOrdersAndIfSoDoSomethingAboutIt(int productId)
         {
             using (var db = new ApplicationDbContext())
             {
                 List<Item> items = db.Item.Where(row => row.ProductId == productId && row.GantryId !=0).ToList();
-                List<SupplierOrder> supplierOrders = GetCurrentOrders(productId);
+                List<SupplierOrder> supplierOrders = GetCurrentOrder(productId);
                 Product product = db.Product.FirstOrDefault(row => row.ProductId == productId);
                 int supply = 0;
                 foreach(SupplierOrder order in supplierOrders)
