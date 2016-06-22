@@ -126,7 +126,7 @@ namespace Wamasys.Migrations
                 ZCoordinate = 5
             });
 
-            // Gantries
+/*            // Gantries
             var gantryList = new List<Gantry>();
 
             for(var j = 0; j < 5000; j++) {
@@ -151,7 +151,7 @@ namespace Wamasys.Migrations
                     }));
                     context.Product.AddRange(productList);
                 }
-            }
+            }*/
         }
 
     }
