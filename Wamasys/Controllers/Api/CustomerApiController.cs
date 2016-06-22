@@ -42,11 +42,12 @@ namespace Wamasys.Controllers.api
         }
 
         // POST api/<controller>
-        public void Post(OrderModel model)
+        public async void Post(OrderModel model)
         {
             using (var repo = new CustomerOrderRepository())
             {
-                if (!repo.InsertCustomerOrder(model))
+                var result = await repo.InsertCustomerOrder(model);
+                if (!result)
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
                     {
@@ -104,11 +105,13 @@ namespace Wamasys.Controllers.api
             }
         }
 
-        public void Post(StatusAdjustModel model)
+        public async void Post(StatusAdjustModel model)
         {
             using (var repo = new CustomerOrderRepository())
             {
-                if (!repo.ChangeStatus(repo.GetCustomerOrder(model.OrderId), "Afgeleverd"))
+                
+                var result = repo.ChangeStatus(repo.GetCustomerOrder(model.OrderId), "Afgeleverd");
+                if (!result.Result)
                 {
                     var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
                     {
