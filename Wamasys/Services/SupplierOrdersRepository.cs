@@ -45,9 +45,29 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                List<Item> items = db.Item.Where(row => row.ProductId == productId).ToList() ;
+                List<Item> items = db.Item.Where(row => row.ProductId == productId && row.GantryId !=0).ToList();
+                List<SupplierOrder> supplierOrders = GetCurrentOrders(productId);
+                Product product = db.Product.FirstOrDefault(row => row.ProductId == productId);
+                int supply = 0;
+                foreach(SupplierOrder order in supplierOrders)
+                {
+                    supply = supply + order.Amount;
+                }
+                supply = supply + items.Count;
             }
         }
+
+        private void OrderStuffIfINeedToOrderStuff(int supply, Product product)
+        {
+            int minimumAmount = product.MinimumAmount;
+            bool needToOrderYN= false;
+            if(supply < minimumAmount)
+            {
+                int needToOrder = minimumAmount - supply;
+                needToOrderYN = true;
+            }
+        }
+       
 
         //<summary>
         //  This methode should be invoked AFTER the list has been given to the requesting entitiy.
