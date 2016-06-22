@@ -1,0 +1,114 @@
+﻿@model Wamasys.Models.ProductViewModel
+
+@{
+    ViewBag.Title = "Product information";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>@ViewBag.Title</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h4>@Model.Product.Name</h4>
+        <hr/>
+        <table class="table table-bordered">
+            <tr>
+                <td><strong>Product name</strong></td>
+                @if (!Model.Product.Name.IsEmpty())
+                {
+                    <td>@Model.Product.Name</td>
+                }
+                else
+                {
+                    <td>Product name unknown</td>
+                }
+            </tr>
+            <tr>
+                <td><strong>Product code</strong></td>
+                <td>
+                    @Model.Product.ProductId
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Supplier code</strong></td>
+                <td>
+                    @Model.Product.SupplierId
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Age</strong></td>
+                <td>
+                    @Model.Product.Age
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Description</strong></td>
+
+                @if (!Model.Product.Description.IsEmpty())
+                {
+                    <td>@Model.Product.Description</td>
+                }
+                else
+                {
+                    <td>Description unknown</td>
+                }
+            </tr>
+            <tr>
+                <td><strong>Attributes</strong></td>
+                <td>
+                    @if (Model.Product.Attributes.Count() != 0)
+                    {
+                        <ul>
+                            @foreach (var item in Model.Product.Attributes)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Attributes unknown</p>
+                    }
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <h4>Place order</h4>
+        <hr/>
+        @using (Html.BeginForm("AddCustomerOrder", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MinimumAmount, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.MinimumAmount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MinimumAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-8 col-md-12">
+                        <input type="submit" value="Order" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
