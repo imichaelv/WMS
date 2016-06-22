@@ -60,7 +60,7 @@ namespace Wamasys.Controllers.api
 
         private ProductModel[] ConvertProductModel(ICollection<Item> items)
         {
-            List<ProductModel> productsList = new List<ProductModel>();
+            var productsList = new List<ProductModel>();
 
             foreach (var item in items)
             {
