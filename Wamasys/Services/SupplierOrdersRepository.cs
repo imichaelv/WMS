@@ -9,7 +9,7 @@ namespace Wamasys.Services
 {
     public class SupplierOrdersRepository : ApiController
     {
-        public async void InsertSupplierOrder(SupplierOrder[] order)
+        public async void InsertSupplierOrder(SupplierOrder order)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -20,6 +20,15 @@ namespace Wamasys.Services
                     StatusId = order.StatusId
                 };
                 await db.SaveChangesAsync();
+            }
+        }
+
+        public List<SupplierOrder> GetCurrentOrders()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd")).ToList();
+                return orders;
             }
         }
 
@@ -36,11 +45,11 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                List<Item> items = db.Item.Where(row => row.ProductId == productId && row.GantryId !=0).ToList();
+                List<Item> items = db.Item.Where(row => row.ProductId == productId && row.GantryId != 0).ToList();
                 List<SupplierOrder> supplierOrders = GetCurrentOrders(productId);
                 Product product = db.Product.FirstOrDefault(row => row.ProductId == productId);
                 int supply = 0;
-                foreach(SupplierOrder order in supplierOrders)
+                foreach (SupplierOrder order in supplierOrders)
                 {
                     supply = supply + order.Amount;
                 }
@@ -51,14 +60,25 @@ namespace Wamasys.Services
         private void OrderStuffIfINeedToOrderStuff(int supply, Product product)
         {
             int minimumAmount = product.MinimumAmount;
-            bool needToOrderYN= false;
-            if(supply < minimumAmount)
+            bool needToOrderYN = false;
+            int needToOrder = 0;
+            if (supply < minimumAmount)
             {
-                int needToOrder = minimumAmount - supply;
+                needToOrder = minimumAmount - supply;
                 needToOrderYN = true;
             }
+            if (needToOrderYN)
+            {
+                SupplierOrder supplierOrder = new SupplierOrder();
+                supplierOrder.Amount = needToOrder;
+                supplierOrder.ProductId = product.ProductId;
+                supplierOrder.Product = product;
+                supplierOrder.Status = new Status();
+                supplierOrder.StatusId = 0;
+                InsertSupplierOrder(supplierOrder);
+            }
         }
-       
+
 
         //<summary>
         //  This methode should be invoked AFTER the list has been given to the requesting entitiy.
@@ -82,10 +102,10 @@ namespace Wamasys.Services
             {
                 var supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == SupplierOrderId);
                 if (supplierOrder?.Status != null)
-                    {
-                        return supplierOrder.Status.Name;
-                    }
+                {
+                    return supplierOrder.Status.Name;
                 }
+            }
             return "Error";
         }
 
@@ -95,7 +115,7 @@ namespace Wamasys.Services
             {
                 SupplierOrder supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == supplierOrderId);
                 Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
-                if(status !=null)
+                if (status != null)
                 {
                     supplierOrder.Status = status;
                     supplierOrder.StatusId = status.StatusId;
@@ -104,12 +124,12 @@ namespace Wamasys.Services
             }
         }
 
-        public int GetStatusId( string statusName)
+        public int GetStatusId(string statusName)
         {
             using (var db = new ApplicationDbContext())
             {
                 var status = db.Status.FirstOrDefault(row => row.Name == statusName);
-                if(status != null)
+                if (status != null)
                 {
                     return status.StatusId;
                 }
@@ -138,7 +158,7 @@ namespace Wamasys.Services
             }
         }
 
-       
+
         public void Dispose()
         {
             throw new NotImplementedException();
