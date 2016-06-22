@@ -17,7 +17,7 @@ namespace Wamasys.Controllers
                 var customerOrder = new CustomerOrder();
                 customerOrder.Company.CompanyId = model.CustomerId;
                 customerOrder.Date = model.DateTime;
-                customerOrder.Status.StatusId = model.StatusId;
+                customerOrder.Status.StatusId = GetStatusId("Nieuwe bestelling");
                 await db.SaveChangesAsync();
             }
             using (var db = new ApplicationDbContext())
@@ -66,9 +66,9 @@ namespace Wamasys.Controllers
             {
 
                 CustomerOrder customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
-                if(customerOrder != null)
+                if (customerOrder != null)
                 {
-                    if(customerOrder.Status != null)
+                    if (customerOrder.Status != null)
                     {
                         return customerOrder.Status.Name;
                     }
@@ -77,15 +77,17 @@ namespace Wamasys.Controllers
             }
         }
 
-        public async void ChangeStatus(string newStatus)
+        public async void ChangeStatus(CustomerOrder order, string newStatus)
         {
             using (var db = new ApplicationDbContext())
             {
-                switch(newStatus)
+
+                Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
+                if (status != null)
                 {
-                    
-                        
+                    order.StatusId = status.StatusId;
                 }
+                await db.SaveChangesAsync();
             }
         }
 
