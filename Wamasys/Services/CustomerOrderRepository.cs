@@ -85,6 +85,7 @@ namespace Wamasys.Controllers
                 Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
                 if (status != null)
                 {
+                    order.Status = status;
                     order.StatusId = status.StatusId;
                 }
                 await db.SaveChangesAsync();

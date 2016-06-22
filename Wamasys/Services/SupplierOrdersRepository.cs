@@ -36,7 +36,7 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                foreach(SupplierOrder order in orders)
+                foreach (SupplierOrder order in orders)
                 {
                     order.StatusId = newStatus;
                 }
@@ -48,10 +48,43 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                CustomerOrder customerOrder = db.CustomerOrder.Where(row => row.CustomerOrderid == SupplierOrderId).FirstOrDefault();
-                return db.Status.Where(row => row.StatusId == customerOrder.StatusId).FirstOrDefault().Name;
+                SupplierOrder supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == SupplierOrderId);
+                if (supplierOrder != null)
+                {
+                    if (supplierOrder.Status != null)
+                    {
+                        return supplierOrder.Status.Name;
+                    }
+                }
             }
             return "Error";
+        }
+
+        public async void ChangeStatus(SupplierOrder order, string newStatus)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
+                if(status !=null)
+                {
+                    order.Status = status;
+                    order.StatusId = status.StatusId;
+                }
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public int GetStatusId( string statusName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                Status status = db.Status.FirstOrDefault(row => row.Name == statusName);
+                if(status != null)
+                {
+                    return status.StatusId;
+                }
+            }
+            return -1;
         }
 
         public async void AddItems(int amount, int productId)
@@ -72,5 +105,7 @@ namespace Wamasys.Services
                 await db.SaveChangesAsync();
             }
         }
+
+       
     }
 }
