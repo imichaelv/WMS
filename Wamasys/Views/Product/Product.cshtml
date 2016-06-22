@@ -39,6 +39,12 @@
                 </td>
             </tr>
             <tr>
+                <td><strong>Age</strong></td>
+                <td>
+                    @Model.Product.Age
+                </td>
+            </tr>
+            <tr>
                 <td><strong>Description</strong></td>
 
                 @if (!Model.Product.Description.IsEmpty())
@@ -51,11 +57,16 @@
                 }
             </tr>
             <tr>
-                <td><strong>Atributes</strong></td>
+                <td><strong>Attributes</strong></td>
                 <td>
                     @if (Model.Product.Attributes.Count() != 0)
                     {
-
+                        <ul>
+                            @foreach (var item in Model.Product.Attributes)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -75,7 +86,6 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <hr />
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

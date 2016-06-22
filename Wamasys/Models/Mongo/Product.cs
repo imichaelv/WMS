@@ -13,8 +13,6 @@ namespace Wamasys.Models.Mongo
     /// </summary>
     public class Product
     {
-        public int PropertyId { get; set; }
-
         [BsonId]
         public int ProductId { get; set; }
 
@@ -25,5 +23,9 @@ namespace Wamasys.Models.Mongo
         public List<BsonValue> Attributes { get; set; }
 
         public int SupplierId { get; set; }
+
+        public int Age { get; set; }
+
+        public List<BsonValue> Tags { get; set; }
     }
 }
