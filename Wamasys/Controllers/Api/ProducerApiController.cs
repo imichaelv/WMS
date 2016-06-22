@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace Wamasys.Controllers.Api
 {
-    public class OderStatusController : ApiController
+    public class ProducerApiController : ApiController
     {
         // GET: api/Test
         public IEnumerable<string> Get()

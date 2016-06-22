@@ -12,7 +12,7 @@ namespace Wamasys.Controllers.api
 {
     [RoutePrefix("api/CheckOrder")]
     [ApiAuthentication]
-    public class CustomerOrderController : ApiController
+    public class CustomerApiController : ApiController
     {
         // GET api/<controller>/5
         public OrderModel Get(int id)
