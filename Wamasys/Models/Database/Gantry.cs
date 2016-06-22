@@ -24,7 +24,7 @@ namespace Wamasys.Models.Database
 
         public int ZCoordinate { get; set; }
 
-        public int BuildingId { get; set; }
+        public int? BuildingId { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
 

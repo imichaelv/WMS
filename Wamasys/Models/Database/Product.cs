@@ -21,7 +21,7 @@ namespace Wamasys.Models.Database
 
         public int PropertyId { get; set; }
 
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
 

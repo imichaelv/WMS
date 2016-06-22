@@ -15,9 +15,9 @@ namespace Wamasys.Models.Database
 
         public int ProductId { get; set; }
 
-        public int GantryId { get; set; }
+        public int? GantryId { get; set; }
 
-        public int CustomerOrderId { get; set; }
+        public int? CustomerOrderId { get; set; }
 
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }

@@ -20,7 +20,7 @@ namespace Wamasys.Models.Database
 
         public int CompanyId { get; set; }
 
-        public int StatusId { get; set; }
+        public int? StatusId { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
 

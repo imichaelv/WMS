@@ -27,7 +27,6 @@ namespace Wamasys.Models.Database
 
         public int ZCoordinate { get; set; }
 
-
         public virtual ICollection<Gantry> Gantries { get; set; }
     }
 }

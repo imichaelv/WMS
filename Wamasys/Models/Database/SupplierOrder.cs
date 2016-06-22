@@ -15,7 +15,7 @@ namespace Wamasys.Models.Database
 
         public int Amount { get; set; }
 
-        public int StatusId { get; set; }
+        public int? StatusId { get; set; }
 
         public int ProductId { get; set; }
 
