@@ -23,7 +23,7 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId == 1).ToList();
+                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd")).ToList();
                 return orders;
             }
         }
@@ -32,13 +32,13 @@ namespace Wamasys.Services
         //  This methode should be invoked AFTER the list has been given to the requesting entitiy.
         // This is because if would still be the same objects beeing used.
         //</summary>
-        public async void UpdateOrders(List<SupplierOrder> orders, int newStatus)
+        public async void UpdateOrders(List<SupplierOrder> orders, string newStatus)
         {
             using (var db = new ApplicationDbContext())
             {
                 foreach (SupplierOrder order in orders)
                 {
-                    order.StatusId = newStatus;
+                    order.StatusId = GetStatusId(newStatus);
                 }
                 await db.SaveChangesAsync();
             }
