@@ -5,14 +5,10 @@ using System.Web;
 
 namespace Wamasys.Models.Api
 {
-    public class OrderApiModel
+    public class StatusAdjustModel
     {
         public int CustomerId { get; set; }
 
-        public int StatusId { get; set; }
-
-        public List<OrderModel> Orders { get; set; }
-
-        public DateTime DateTime { get; set; }
+        public int OrderId { get; set; }
     }
 }
