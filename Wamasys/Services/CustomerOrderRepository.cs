@@ -64,8 +64,36 @@ namespace Wamasys.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                CustomerOrder customerOrder = db.CustomerOrder.Where(row => row.CustomerOrderid == orderId).FirstOrDefault();
-                return db.Status.Where(row => row.StatusId == customerOrder.StatusId).FirstOrDefault().Name;
+
+                CustomerOrder customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
+                if(customerOrder != null)
+                {
+                    if(customerOrder.Status != null)
+                    {
+                        return customerOrder.Status.Name;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public async void ChangeStatus(string newStatus)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                switch(newStatus)
+                {
+                    
+                        
+                }
+            }
+        }
+
+        public int GetStatusId(string description)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.Status.Where(row => row.Name == description).FirstOrDefault().StatusId;
             }
         }
     }
