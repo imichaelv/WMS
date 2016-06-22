@@ -193,6 +193,8 @@
     <Compile Include="App_Start\WmsDbContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomerOrderController.cs" />
+    <Compile Include="Controllers\Api\TestController - Copy.cs" />
+    <Compile Include="Controllers\Api\OderStatusController.cs" />
     <Compile Include="Models\ApiKeyViewModel.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\OrderApiModel.cs" />

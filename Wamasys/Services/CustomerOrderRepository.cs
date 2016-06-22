@@ -6,9 +6,9 @@ using Wamasys.Models;
 using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 
-namespace Wamasys.Controllers
+namespace Wamasys.Services
 {
-    public class CustomerOrderController : ApiController
+    public class CustomerOrderRepository : ApiController
     {
 
         public async void InsertCustomerOrder(OrderApiModel model)
@@ -45,11 +45,19 @@ namespace Wamasys.Controllers
             }
         }
 
-        public List<CustomerOrder> GetCustomerOrder(int customerId)
+        public List<CustomerOrder> GetCustomerOrders(int customerId)
         {
             using (var db = new ApplicationDbContext())
             {
                 return db.CustomerOrder.Where(row => row.CompanyId == customerId).ToList();
+            }
+        }
+
+        public CustomerOrder GetCustomerOrder(int orderId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
             }
         }
 
@@ -65,7 +73,7 @@ namespace Wamasys.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                CustomerOrder customerOrder = db.CustomerOrder.Where(row => row.CustomerOrderid == orderId).FirstOrDefault();
+                CustomerOrder customerOrder = db.CustomerOrder.FirstOrDefault(row => row.CustomerOrderid == orderId);
                 return db.Status.Where(row => row.StatusId == customerOrder.StatusId).FirstOrDefault().Name;
             }
         }
