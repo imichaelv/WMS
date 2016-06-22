@@ -88,9 +88,6 @@ namespace Wamasys.Controllers
                 };
                 model.Products.Add(product);
             }
-
-            model.Brands = PopulateBrandList(model);
-
             return View(model);
         }
 
@@ -107,15 +104,16 @@ namespace Wamasys.Controllers
             var builder = Builders<BsonDocument>.Filter;
             FilterDefinition<BsonDocument> filter;
 
-            // Such an ugly solution, but it works...
             if (!model.SupplierId.HasValue && model.ProductId.HasValue && model.Age.HasValue)
             {
                 filter = builder.Eq("product_id", model.ProductId) & builder.Gt("age", model.Age);
             }
+
             else if (model.SupplierId.HasValue && !model.ProductId.HasValue && model.Age.HasValue)
             {
                 filter = builder.Eq("supplier_id", model.SupplierId) & builder.Gt("age", model.Age);
             }
+
             else if (model.SupplierId.HasValue && model.ProductId.HasValue && !model.Age.HasValue)
             {
                 filter = builder.Eq("supplier_id", model.SupplierId) & builder.Eq("product_id", model.ProductId);
@@ -135,7 +133,7 @@ namespace Wamasys.Controllers
             else
             {
                 filter = builder.Eq("supplier_id", model.SupplierId) & builder.Eq("product_id", model.ProductId) & builder.Gt("age", model.Age);
-            }
+            }            
 
             var result = await collection.Find(filter).Limit(30).ToListAsync();
 
@@ -146,7 +144,6 @@ namespace Wamasys.Controllers
                 model.SupplierId = null;
                 model.Age = null;
                 model.Name = "";
-                model.Brands = PopulateBrandList(model);
                 return View(model);
             }
 
@@ -173,18 +170,7 @@ namespace Wamasys.Controllers
             model.SupplierId = null;
             model.Name = "";
             model.Age = null;
-            model.Brands = PopulateBrandList(model);
             return View(model);
-        }
-
-        private SelectList PopulateBrandList(ProductsViewModel model)
-        {
-            return new SelectList(
-                new List<SelectListItem>
-                {
-                    new SelectListItem { Text = "Lego", Value = "Lego"},
-                    new SelectListItem { Text = "Duplo", Value = "Duplo"},
-                }, "Value", "Text");
         }
     }
 }

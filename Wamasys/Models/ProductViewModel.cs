@@ -36,9 +36,5 @@ namespace Wamasys.Models
 
         [Display(Name = "Minimum age")]
         public int? Age { get; set; }
-
-        public SelectList Brands { get; set; }
-
-        public string SelectedBrand { get; set; }
     }
 }
