@@ -14,7 +14,7 @@ namespace Wamasys.Services
                 var supplierOrder = new SupplierOrder();
                 supplierOrder.Amount = order.Amount;
                 supplierOrder.ProductId = order.ProductId;
-                supplierOrder.StatusId = order.StatusId;
+                supplierOrder.StatusId = GetStatusId("Nieuwe bestelling");
                 await db.SaveChangesAsync();
             }
         }

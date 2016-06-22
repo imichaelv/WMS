@@ -15,6 +15,7 @@ namespace Wamasys.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var customerOrder = new CustomerOrder();
+                customerOrder.CustomerOrderid = db.CustomerOrder.Max(row => )
                 customerOrder.Company.CompanyId = model.CustomerId;
                 customerOrder.Date = model.DateTime;
                 customerOrder.Status.StatusId = GetStatusId("Nieuwe bestelling");
@@ -81,7 +82,6 @@ namespace Wamasys.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-
                 Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
                 if (status != null)
                 {
