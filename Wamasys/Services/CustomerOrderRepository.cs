@@ -20,12 +20,11 @@ namespace Wamasys.Services
                 customerOrder.Company.CompanyId = model.CustomerId;
                 customerOrder.Date = model.DateTime;
                 customerOrder.Status.StatusId = GetStatusId("Nieuwe bestelling");
-                bool succes = await UpdateItems(customerOrder, model.Products.ToList(), db);
+                var succes = await UpdateItems(customerOrder, model.Products.ToList(), db);
                 if (succes)
                 {
-                await db.SaveChangesAsync();
-                    return succes;
-            }
+                    await db.SaveChangesAsync();
+                }
                 return succes;
             }
         }

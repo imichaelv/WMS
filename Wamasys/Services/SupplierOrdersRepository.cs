@@ -3,6 +3,8 @@ using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 using System.Linq;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Web.Http;
 
 namespace Wamasys.Services
@@ -13,31 +15,29 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var supplierOrder = new SupplierOrder
-                {
-                    Amount = order.Amount,
-                    ProductId = order.ProductId,
-                    StatusId = order.StatusId
-                };
+                db.SupplierOrder.Add(order);
                 await db.SaveChangesAsync();
             }
         }
 
-        public List<SupplierOrder> GetCurrentOrders()
+        public List<SupplierOrderModel> GetCurrentOrders(int limit)
         {
             using (var db = new ApplicationDbContext())
             {
-                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd")).ToList();
-                return orders;
-            }
-        }
+                IQueryable<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId == GetStatusId("In behandeling")).Take(5);
+                List<SupplierOrderModel> newOrders = new List<SupplierOrderModel>();
 
-        public List<SupplierOrder> GetCurrentOrders(int productId)
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd") && row.ProductId == productId).ToList();
-                return orders;
+                foreach (var order in orders)
+                {
+                    var convertedOrder = new SupplierOrderModel
+                    {
+                        ProductId = order.ProductId,
+                        OrderId = order.SupplierOrderId,
+                        Amount = order.Amount
+                    };
+                    newOrders.Add(convertedOrder);
+                }
+                return newOrders;
             }
         }
 
@@ -78,7 +78,7 @@ namespace Wamasys.Services
                 InsertSupplierOrder(supplierOrder);
             }
         }
-
+       
 
         //<summary>
         //  This methode should be invoked AFTER the list has been given to the requesting entitiy.
@@ -102,10 +102,10 @@ namespace Wamasys.Services
             {
                 var supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == SupplierOrderId);
                 if (supplierOrder?.Status != null)
-                {
-                    return supplierOrder.Status.Name;
+                    {
+                        return supplierOrder.Status.Name;
+                    }
                 }
-            }
             return "Error";
         }
 
@@ -156,12 +156,6 @@ namespace Wamasys.Services
                 }
                 await db.SaveChangesAsync();
             }
-        }
-
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }
