@@ -10,7 +10,5 @@ namespace Wamasys.Models.Api
         public int ProductId { get; set; }
 
         public int Amount { get; set; }
-
-        public bool Next { get; set; }
     }
 }
