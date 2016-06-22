@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using Wamasys.Models;
 using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 
-namespace Wamasys.Controllers
+namespace Wamasys.Services
 {
     public class CustomerOrderController : ApiController
     {

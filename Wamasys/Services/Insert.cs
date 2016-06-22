@@ -2,7 +2,7 @@
 using System.Text;
 using System.Web.Mvc;
 
-namespace Wamasys.Models
+namespace Wamasys.Services
 {
     public class OrderParserModelView
     {

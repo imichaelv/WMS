@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using Wamasys.Identity;
 using Wamasys.Models.Api;
 
-namespace Wamasys.Controllers.api
+namespace Wamasys.Controllers.Api
 {
     [ApiAuthentication]
     public class CustomerOrderController : ApiController

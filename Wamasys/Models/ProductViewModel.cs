@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Wamasys.Models.Mongo;
 
 namespace Wamasys.Models
@@ -28,9 +29,16 @@ namespace Wamasys.Models
         public string Name { get; set; }
 
         [Display(Name = "Supplier code")]
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
 
         [Display(Name = "Product code")]
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
+
+        [Display(Name = "Minimum age")]
+        public int? Age { get; set; }
+
+        public SelectList Brands { get; set; }
+
+        public string SelectedBrand { get; set; }
     }
 }
