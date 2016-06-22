@@ -46,7 +46,15 @@ namespace Wamasys.Controllers.api
         {
             using (var repo = new CustomerOrderRepository())
             {
-                repo.InsertCustomerOrder(model);
+                if (!repo.InsertCustomerOrder(model))
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent("Your order could not be processed"),
+                        ReasonPhrase = "Product ID Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
             }
         }
 
@@ -96,13 +104,20 @@ namespace Wamasys.Controllers.api
             }
         }
 
-        public bool Post(OrderModel model)
+        public void Post(StatusAdjustModel model)
         {
             using (var repo = new CustomerOrderRepository())
             {
-                repo.InsertCustomerOrder(model);
+                if (!repo.ChangeStatus(repo.GetCustomerOrder(model.OrderId), "Afgeleverd"))
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent("Could not adjust order status"),
+                        ReasonPhrase = "The order does not exist"
+                    };
+                    throw new HttpResponseException(resp);
+                }
             }
-            return false;
         }
     }
 }

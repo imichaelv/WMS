@@ -194,12 +194,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomerOrderController.cs" />
     <Compile Include="Controllers\Api\TestController - Copy.cs" />
-    <Compile Include="Controllers\Api\OderStatusController.cs" />
     <Compile Include="Models\ApiKeyViewModel.cs" />
     <Compile Include="Models\Api\ProductModel.cs" />
     <Compile Include="Models\Api\OrderModel.cs" />
     <Compile Include="Models\Api\OrderStatusModel.cs" />
-    <Compile Include="Models\Api\SupplierOrderApiModel.cs" />
+    <Compile Include="Models\Api\StatusAdjustModel.cs" />
+    <Compile Include="Models\Api\SupplierOrderModel.cs" />
     <Compile Include="Models\Database\ApiKey.cs" />
     <Compile Include="Services\CustomerOrderRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
