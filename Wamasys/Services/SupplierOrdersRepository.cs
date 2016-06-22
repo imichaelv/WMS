@@ -24,8 +24,8 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                IQueryable<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId == GetStatusId("In behandeling")).Take(limit);
-                List<SupplierOrderModel> newOrders = new List<SupplierOrderModel>();
+                var orders = db.SupplierOrder.Where(row => row.StatusId == GetStatusId("In behandeling")).Take(limit);
+                var newOrders = new List<SupplierOrderModel>();
 
                 foreach (var order in orders)
                 {
@@ -53,11 +53,11 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                List<Item> items = db.Item.Where(row => row.ProductId == productId && row.GantryId !=0).ToList();
-                List<SupplierOrder> supplierOrders = GetCurrentOrder(productId);
-                Product product = db.Product.FirstOrDefault(row => row.ProductId == productId);
-                int supply = 0;
-                foreach (SupplierOrder order in supplierOrders)
+                var items = db.Item.Where(row => row.ProductId == productId && row.GantryId !=0).ToList();
+                var supplierOrders = GetCurrentOrder(productId);
+                var product = db.Product.FirstOrDefault(row => row.ProductId == productId);
+                var supply = 0;
+                foreach (var order in supplierOrders)
                 {
                     supply = supply + order.Amount;
                 }
@@ -67,22 +67,24 @@ namespace Wamasys.Services
 
         private void OrderStuffIfINeedToOrderStuff(int supply, Product product)
         {
-            int minimumAmount = product.MinimumAmount;
-            bool needToOrderYN = false;
-            int needToOrder = 0;
+            var minimumAmount = product.MinimumAmount;
+            var needToOrderYn = false;
+            var needToOrder = 0;
             if (supply < minimumAmount)
             {
                 needToOrder = minimumAmount - supply;
-                needToOrderYN = true;
+                needToOrderYn = true;
             }
-            if (needToOrderYN)
+            if (needToOrderYn)
             {
-                SupplierOrder supplierOrder = new SupplierOrder();
-                supplierOrder.Amount = needToOrder;
-                supplierOrder.ProductId = product.ProductId;
-                supplierOrder.Product = product;
-                supplierOrder.Status = new Status();
-                supplierOrder.StatusId = 0;
+                var supplierOrder = new SupplierOrder
+                {
+                    Amount = needToOrder,
+                    ProductId = product.ProductId,
+                    Product = product,
+                    Status = new Status(),
+                    StatusId = 0
+                };
                 InsertSupplierOrder(supplierOrder);
             }
         }
@@ -121,8 +123,8 @@ namespace Wamasys.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                SupplierOrder supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == supplierOrderId);
-                Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
+                var supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == supplierOrderId);
+                var status = db.Status.FirstOrDefault(row => row.Name == newStatus);
                 if (status != null)
                 {
                     supplierOrder.Status = status;

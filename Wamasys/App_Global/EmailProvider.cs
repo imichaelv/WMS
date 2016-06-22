@@ -25,7 +25,7 @@ namespace Wamasys
             msg.To.Add(new MailAddress(user.Email, user.FirstName + " " + user.LastName));
             msg.From = new MailAddress(NoReply, Name);
             msg.Subject = "[WMS Logistics] Bevestig je account";
-            string html = "Beste " + user.FirstName + ", <br><br> Bedankt voor je registratie op het Bijlesportaal. Op <a href=\"" + url + "\">deze link</a> kan je je account bevestigen en gebruik maken van het Bijlesportaal. Nog een fijne dag! <br><br> Met vriendelijke groet, <br> Het Bijlesportaal-team";
+            var html = "Beste " + user.FirstName + ", <br><br> Bedankt voor je registratie op het Bijlesportaal. Op <a href=\"" + url + "\">deze link</a> kan je je account bevestigen en gebruik maken van het Bijlesportaal. Nog een fijne dag! <br><br> Met vriendelijke groet, <br> Het Bijlesportaal-team";
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
 
             smtpClient.Credentials = Credits;

@@ -44,10 +44,10 @@ namespace Wamasys.Migrations
         /// <returns></returns>
         private string newStore()
         {
-            Random rand = new Random();
+            var rand = new Random();
 
-            int id = rand.Next(0, availableStoreList.Count);
-            string name = (string)availableStoreList[id];
+            var id = rand.Next(0, availableStoreList.Count);
+            var name = (string)availableStoreList[id];
             availableStoreList.RemoveAt(id);
             usedStoreList.Add(name);
             return name;
@@ -59,9 +59,9 @@ namespace Wamasys.Migrations
         private void loadStores()
         {
             availableStoreList = new ArrayList();
-            for (int i = 0; i < stores.Length; i++)
+            for (var i = 0; i < stores.Length; i++)
             {
-                for (int j = 0; j < locations.Length; j++)
+                for (var j = 0; j < locations.Length; j++)
                 {
                     availableStoreList.Add(stores[i] + " " + locations[j]);
                 }

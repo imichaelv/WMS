@@ -41,7 +41,7 @@ namespace Wamasys.Services
                     {
                         return false;
                     }
-                    foreach (Item item in items)
+                    foreach (var item in items)
                     {
                         item.GantryId = 0;
                         item.CustomerOrderId = customerOrder.CustomerOrderid;
