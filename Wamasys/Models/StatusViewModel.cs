@@ -16,19 +16,4 @@ namespace Wamasys.Models
 
         public string Description { get; set; }
     }
-
-    public class CreateStatusViewModel
-    {
-        
-    }
-
-    public class EditStatusViewModel
-    {
-        
-    }
-
-    public class DeleteStatusViewModel
-    {
-        
-    }
 }
