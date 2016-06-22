@@ -23,12 +23,20 @@ namespace Wamasys.Services
             }
         }
 
-        public List<SupplierOrder> GetCurrentOrders()
+        public List<SupplierOrder> GetCurrentOrders(int productId)
         {
             using (var db = new ApplicationDbContext())
             {
-                var orders = db.SupplierOrder.Where(row => row.StatusId == 1).ToList();
+                List<SupplierOrder> orders = db.SupplierOrder.Where(row => row.StatusId != GetStatusId("Afgeleverd") && row.ProductId == productId).ToList();
                 return orders;
+            }
+        }
+
+        public void SeeIfWeNeedAnyOrdersAndIfSoDoSomethingAboutIt(int productId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                List<Item> items = db.Item.Where(row => row.ProductId == productId).ToList() ;
             }
         }
 
@@ -61,15 +69,16 @@ namespace Wamasys.Services
             return "Error";
         }
 
-        public async void ChangeStatus(SupplierOrder order, string newStatus)
+        public async void ChangeStatus(int supplierOrderId, string newStatus)
         {
             using (var db = new ApplicationDbContext())
             {
-                var status = db.Status.FirstOrDefault(row => row.Name == newStatus);
+                SupplierOrder supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == supplierOrderId);
+                Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
                 if(status !=null)
                 {
-                    order.Status = status;
-                    order.StatusId = status.StatusId;
+                    supplierOrder.Status = status;
+                    supplierOrder.StatusId = status.StatusId;
                 }
                 await db.SaveChangesAsync();
             }
