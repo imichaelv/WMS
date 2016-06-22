@@ -1,11 +1,13 @@
-﻿using Wamasys.Models.Api;
+﻿using System;
+using Wamasys.Models.Api;
 using Wamasys.Models.Database;
 using System.Linq;
 using System.Collections.Generic;
+using System.Web.Http;
 
 namespace Wamasys.Services
 {
-    public class SupplierOrdersRepository
+    public class SupplierOrdersRepository : ApiController
     {
         public async void InsertSupplierOrder(SupplierOrderModel order)
         {
@@ -106,6 +108,10 @@ namespace Wamasys.Services
             }
         }
 
-       
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
