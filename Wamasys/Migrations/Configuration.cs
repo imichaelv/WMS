@@ -11,6 +11,64 @@ using Wamasys.Models.Values;
 
 namespace Wamasys.Migrations
 {
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Wamasys.ApplicationDbContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = true;
+        }
+
+        protected override void Seed(Wamasys.ApplicationDbContext context)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var roleManager = new RoleManager<ApplicationRole>(new RoleStore<ApplicationRole>(context));
+
+            if (roleManager.FindByName(RoleModel.Admin) == null)
+            {
+                roleManager.Create(new ApplicationRole { Name = RoleModel.Admin, Type = RoleType.Elevated });
+                roleManager.Create(new ApplicationRole { Name = RoleModel.Customer, Type = RoleType.Customer });
+                roleManager.Create(new ApplicationRole { Name = RoleModel.Supplier, Type = RoleType.Supplier });
+            }
+
+            var user1 = new ApplicationUser { FirstName = "Michael", LastName = "Jansen", Email = "spammich@live.nl", EmailConfirmed = true, UserName = "spammich@live.nl", AccessFailedCount = 0 };
+            var user2 = new ApplicationUser { FirstName = "Joost", LastName = "de Grote", Email = "pipodeclown@st.hanze.nl", EmailConfirmed = true, UserName = "pipodeclown@st.hanze.nl", AccessFailedCount = 0 };
+            var user3 = new ApplicationUser { FirstName = "Leon", LastName = "Wetzel", Email = "leonw@st.hanze.nl", EmailConfirmed = true, UserName = "leonw@st.hanze.nl", AccessFailedCount = 0 };
+            var user4 = new ApplicationUser { FirstName = "Leonie", LastName = "Wetzel", Email = "leoniew@st.hanze.nl", EmailConfirmed = true, UserName = "leoniew@st.hanze.nl", AccessFailedCount = 0 };
+            var user5 = new ApplicationUser { FirstName = "Jorgen", LastName = "Goos", Email = "jorgen.goos@getthere.com", EmailConfirmed = true, UserName = "jorgen.goos@getthere.com", AccessFailedCount = 0 };
+
+            userManager.Create(user1, "test123");
+            userManager.Create(user2, "test123");
+            userManager.Create(user3, "test123");
+            userManager.Create(user4, "test123");
+            userManager.Create(user5, "test123");
+
+
+
+
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
+        }
+    }
+}
+
+/*
+namespace Wamasys.Migrations
+{
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         private readonly Random _rand = new Random();
@@ -22,8 +80,8 @@ namespace Wamasys.Migrations
 
         public Configuration()
         {
-            Client = new MongoClient();
-            Database = Client.GetDatabase("wamasys");
+            //Client = new MongoClient();
+            //Database = Client.GetDatabase("wamasys");
             AutomaticMigrationsEnabled = true;
         }
 
@@ -151,8 +209,8 @@ namespace Wamasys.Migrations
                     }));
                     context.Product.AddRange(productList);
                 }
-            }*/
+            }#1#
         }
 
     }
-}
+}*/

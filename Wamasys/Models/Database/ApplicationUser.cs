@@ -21,9 +21,9 @@ namespace Wamasys.Models.Database
 
         public string LastName { get; set; }
 
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
 
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
 
         [ForeignKey("CompanyId")]
         public virtual Company Company { get; set; }

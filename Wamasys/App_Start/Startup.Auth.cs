@@ -3,13 +3,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using Wamasys;
 using Wamasys.Identity;
 
 namespace Wamasys
 {
     public partial class Startup
     {
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             app.CreatePerOwinContext(ApplicationDbContext.Create);
@@ -21,10 +21,6 @@ namespace Wamasys
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Inloggen"),
-                //Provider = new CookieAuthenticationProvider
-                //{
-                //    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(validateInterval: TimeSpan.FromMinutes(30), regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                //}
             });
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
@@ -34,4 +30,6 @@ namespace Wamasys
             ApplicationDbContext.Seed(new ApplicationDbContext());
         }
     }
+
+
 }
