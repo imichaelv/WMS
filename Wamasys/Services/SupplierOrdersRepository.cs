@@ -57,7 +57,7 @@ namespace Wamasys.Services
                 List<SupplierOrder> supplierOrders = GetCurrentOrder(productId);
                 Product product = db.Product.FirstOrDefault(row => row.ProductId == productId);
                 int supply = 0;
-                foreach(SupplierOrder order in supplierOrders)
+                foreach (SupplierOrder order in supplierOrders)
                 {
                     supply = supply + order.Amount;
                 }
@@ -68,11 +68,22 @@ namespace Wamasys.Services
         private void OrderStuffIfINeedToOrderStuff(int supply, Product product)
         {
             int minimumAmount = product.MinimumAmount;
-            bool needToOrderYN= false;
-            if(supply < minimumAmount)
+            bool needToOrderYN = false;
+            int needToOrder = 0;
+            if (supply < minimumAmount)
             {
-                int needToOrder = minimumAmount - supply;
+                needToOrder = minimumAmount - supply;
                 needToOrderYN = true;
+            }
+            if (needToOrderYN)
+            {
+                SupplierOrder supplierOrder = new SupplierOrder();
+                supplierOrder.Amount = needToOrder;
+                supplierOrder.ProductId = product.ProductId;
+                supplierOrder.Product = product;
+                supplierOrder.Status = new Status();
+                supplierOrder.StatusId = 0;
+                InsertSupplierOrder(supplierOrder);
             }
         }
        
@@ -112,7 +123,7 @@ namespace Wamasys.Services
             {
                 SupplierOrder supplierOrder = db.SupplierOrder.FirstOrDefault(row => row.SupplierOrderId == supplierOrderId);
                 Status status = db.Status.FirstOrDefault(row => row.Name == newStatus);
-                if(status !=null)
+                if (status != null)
                 {
                     supplierOrder.Status = status;
                     supplierOrder.StatusId = status.StatusId;
@@ -126,7 +137,7 @@ namespace Wamasys.Services
             using (var db = new ApplicationDbContext())
             {
                 var status = db.Status.FirstOrDefault(row => row.Name == statusName);
-                if(status != null)
+                if (status != null)
                 {
                     return status.StatusId;
                 }
