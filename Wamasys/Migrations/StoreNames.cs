@@ -1,19 +1,15 @@
-ï»¿using System;
+using System;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-
 
 namespace Wamasys.Migrations
 {
     class StoreNames
     {
-        private string[] stores = new string[] { "BartSmid", "Intertoys", "Speelboom", "Speel-O-Theek", "Speelgoedland", "Steengoed", "Top1Toys", "ToyRus", "Wehkamp", "Bol.com" };
-        private string[] locations = new string[] { "Amsterdam", "Rotterdam", "Den Haag", "Utrecht", "Eindhoven", "Tilburg", "Groningen", "Almere", "Breda", "Nijmegen", "Enschede", "Apeldoorn", "Haarlem", "Amersfoort", "Zaanstad", "Arnhem", "Haarlemmermeer", "'s Hertogenbosch", "Zoetermeer", "Zwolle", "Maastricht", "Leiden", "Dordrecht", "Ede", "Emmen", "Westland", "Venlo", "Delft", "Deventer", "Leeuwarden", "Alkmaar", "Sittard-Geleen", "Helmond", "Heerlen", "Hilversum", "Oss", "Amstelveen", "SÃºdwest-FryslÃ¢n", "Hengelo", "Purmerend", "Roosendaal", "Schiedam", "Lelystad", "Alphen aan den Rijn", "Leidschendam-Voorburg", "Almelo", "Spijkenisse", "Hoorn", "Gouda", "Vlaardingen", "Assen", "Bergen op Zoom", "Capelle aan den IJssel", "Veenendaal", "Katwijk", "Zeist", "Nieuwegein", "Roermond", "Den Helder", "Doetinchem", "Hoogeveen", "Terneuzen", "Middelburg" };
+        private string[] stores = new string[] { "Bart Smid", "Intertoys", "Speelboom", "Speel-O-Theek", "Speelgoedland", "Steengoed", "Top1Toys", "ToyRus", "Wehkamp", "Bol.com" };
+        private string[] locations = new string[] { "Amsterdam", "Rotterdam", "Den Haag", "Utrecht", "Eindhoven", "Tilburg", "Groningen", "Almere", "Breda", "Nijmegen", "Enschede", "Apeldoorn", "Haarlem", "Amersfoort", "Zaanstad", "Arnhem", "Haarlemmermeer", "'s Hertogenbosch", "Zoetermeer", "Zwolle", "Maastricht", "Leiden", "Dordrecht", "Ede", "Emmen", "Westland", "Venlo", "Delft", "Deventer", "Leeuwarden", "Alkmaar", "Sittard-Geleen", "Helmond", "Heerlen", "Hilversum", "Oss", "Amstelveen", "Súdwest-Fryslân", "Hengelo", "Purmerend", "Roosendaal", "Schiedam", "Lelystad", "Alphen aan den Rijn", "Leidschendam-Voorburg", "Almelo", "Spijkenisse", "Hoorn", "Gouda", "Vlaardingen", "Assen", "Bergen op Zoom", "Capelle aan den IJssel", "Veenendaal", "Katwijk", "Zeist", "Nieuwegein", "Roermond", "Den Helder", "Doetinchem", "Hoogeveen", "Terneuzen", "Middelburg" };
         private int maxStores;
-        private ArrayList availableStoreList, usedStoreList;
+        private ArrayList availableStoreList;
+        private ArrayList usedStoreList;
 
         public StoreNames()
         {
@@ -22,11 +18,12 @@ namespace Wamasys.Migrations
             loadStores();
             usedStoreList = new ArrayList();
         }
+
         /// <summary>
         /// gets a new Store
         /// </summary>
         /// <returns></returns>
-        public string getNewStore()
+        public string GetNewStore()
         {
             if (availableStoreList.Count != 0)
             {

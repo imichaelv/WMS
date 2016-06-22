@@ -1,4 +1,4 @@
-﻿namespace Wamasys.Models.Values
+namespace Wamasys.Models.Values
 {
     public class RoleModel
     {
