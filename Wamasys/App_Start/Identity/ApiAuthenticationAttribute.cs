@@ -38,14 +38,16 @@ namespace Wamasys.Identity
                     var nonce = autherizationHeaderArray[2];
                     var requestTimeStamp = autherizationHeaderArray[3];
 
-                    var isValid = IsValidRequest(req, appId, incomingBase64Signature, nonce, requestTimeStamp);
+                    try {
+                        bool isValid = IsValidRequest(req, appId, incomingBase64Signature, nonce, requestTimeStamp).Result;
 
-                    if (isValid.Result)
-                    {
-                        var currentPrincipal = new GenericPrincipal(new GenericIdentity(appId), null);
-                        context.Principal = currentPrincipal;
-                        return Task.FromResult(0);
-                    }
+                        if (isValid)
+                        {
+                            var currentPrincipal = new GenericPrincipal(new GenericIdentity(appId), null);
+                            context.Principal = currentPrincipal;
+                            return Task.FromResult(0);
+                        }
+                    }catch(Exception e) { }
                 }
             }
             context.ErrorResult = new UnauthorizedResult(new AuthenticationHeaderValue[0], context.Request);
