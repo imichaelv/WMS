@@ -17,8 +17,10 @@ namespace Wamasys.Services
             var newProductsList = new List<ProductModel>();
             using (var db = new ApplicationDbContext())
             {
-                var products = db.Product.Skip(amount - 10).Take(10);
-                foreach (var product in products)
+                List<Product> products = db.Product.ToList();
+                IEnumerable<Product> ProductNumerable = products.Skip(amount - 10).Take(10);
+
+                foreach (var product in ProductNumerable)
                 {
                     var newProduct = new ProductModel
                     {
