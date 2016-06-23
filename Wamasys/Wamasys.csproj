@@ -227,6 +227,14 @@
     <Compile Include="Migrations\201606230122587_wamasysMich2db.Designer.cs">
       <DependentUpon>201606230122587_wamasysMich2db.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606230921037_Initial1.cs" />
+    <Compile Include="Migrations\201606230921037_Initial1.Designer.cs">
+      <DependentUpon>201606230921037_Initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606230949474_Initial2.cs" />
+    <Compile Include="Migrations\201606230949474_Initial2.Designer.cs">
+      <DependentUpon>201606230949474_Initial2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\StoreNames.cs" />
     <Compile Include="Models\Values\RoleModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -507,6 +515,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606230122587_wamasysMich2db.resx">
       <DependentUpon>201606230122587_wamasysMich2db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606230921037_Initial1.resx">
+      <DependentUpon>201606230921037_Initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606230949474_Initial2.resx">
+      <DependentUpon>201606230949474_Initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

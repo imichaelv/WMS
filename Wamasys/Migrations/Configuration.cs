@@ -219,6 +219,7 @@ namespace Wamasys.Migrations
                     context.Product.AddRange(productList);
                 }
             }
+            context.SaveChanges();
         }
     }
 }
