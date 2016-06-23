@@ -219,7 +219,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WmsDbContext.cs" />
-    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Migrations\201606222009233_InitialCreate.cs" />
     <Compile Include="Migrations\201606222009233_InitialCreate.Designer.cs">
       <DependentUpon>201606222009233_InitialCreate.cs</DependentUpon>
