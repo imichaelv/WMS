@@ -51,24 +51,31 @@ namespace Wamasys.Controllers
             var filter = Builders<BsonDocument>.Filter.Eq("product_id", id);
             var result = await collection.Find(filter).FirstOrDefaultAsync();
 
-            var product = new Product
+            using (var db = new ApplicationDbContext())
             {
-                Name = result.GetValue("name").ToString(),
-                Description = result.GetValue("description").ToString(),
-                SupplierId = result.GetValue("supplier_id").ToInt32(),
-                Attributes = result.GetValue("attributes").ToBsonDocument().Values.ToList(),
-                ProductId = id.Value,
-                Age = result.GetValue("age").ToInt32(),
-                Tags = result.GetValue("tags").ToBsonDocument().Values.ToList()
-            };
+                var supplierId = result.GetValue("supplier_id").ToInt32();
+                var supplier = db.Supplier.FirstOrDefault(x => x.SupplierId == supplierId).Name ?? "Supplier name unknown";
 
-            var model = new ProductViewModel
-            {
-                Product = product,
-                PropertyId = id.Value
-            };
+                var product = new Product
+                {
+                    Name = result.GetValue("name").ToString(),
+                    Description = result.GetValue("description").ToString(),
+                    SupplierId = result.GetValue("supplier_id").ToInt32(),
+                    SupplierName = supplier,
+                    Attributes = result.GetValue("attributes").ToBsonDocument().Values.ToList(),
+                    ProductId = id.Value,
+                    Age = result.GetValue("age").ToInt32(),
+                    Tags = result.GetValue("tags").ToBsonDocument().Values.ToList()
+                };
 
-            return View(model);
+                var model = new ProductViewModel
+                {
+                    Product = product,
+                    PropertyId = id.Value
+                };
+
+                return View(model);
+            }
         }
 
         /// <summary>
@@ -86,12 +93,15 @@ namespace Wamasys.Controllers
                 var result = await collection.Find(filter).Limit(30).ToListAsync();
                 foreach (var document in result)
                 {
+                    var supplierId = document.GetValue("supplier_id").ToInt32();
+                    var supplier = db.Supplier.FirstOrDefault(x => x.SupplierId == supplierId).Name ?? "Supplier name unknown";
+
                     var product = new Product
                     {
                         Name = document.GetValue("name").ToString(),
                         ProductId = document.GetValue("product_id").ToInt32(),
                         SupplierId = document.GetValue("supplier_id").ToInt32(),
-                        SupplierName = db.Supplier.FirstOrDefault(x => x.SupplierId == model.SupplierId.Value).Name,
+                        SupplierName = supplier,
                         Tags = document.GetValue("tags").ToBsonDocument().Values.ToList(),
                         Age = document.GetValue("age").ToInt32()
                     };
