@@ -28,6 +28,12 @@ namespace Wamasys.Controllers
             return View("Products");
         }
 
+        public ActionResult AddCustomerOrder(int? id)
+        {
+
+            return View();
+        }
+
         /// <summary>
         /// Displays product information and
         /// allows the user to order a certain amount of products.
@@ -71,22 +77,26 @@ namespace Wamasys.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Products()
         {
-            var model = new ProductsViewModel { Products = new List<Product>() };
+            var model = new ProductsViewModel {Products = new List<Product>()};
             var collection = Database.GetCollection<BsonDocument>("products");
             var filter = new BsonDocument();
 
-            var result = await collection.Find(filter).Limit(30).ToListAsync();
-            foreach (var document in result)
+            using (var db = new ApplicationDbContext())
             {
-                var product = new Product
+                var result = await collection.Find(filter).Limit(30).ToListAsync();
+                foreach (var document in result)
                 {
-                    Name = document.GetValue("name").ToString(),
-                    ProductId = document.GetValue("product_id").ToInt32(),
-                    SupplierId = document.GetValue("supplier_id").ToInt32(),
-                    Tags = document.GetValue("tags").ToBsonDocument().Values.ToList(),
-                    Age = document.GetValue("age").ToInt32()
-                };
-                model.Products.Add(product);
+                    var product = new Product
+                    {
+                        Name = document.GetValue("name").ToString(),
+                        ProductId = document.GetValue("product_id").ToInt32(),
+                        SupplierId = document.GetValue("supplier_id").ToInt32(),
+                        SupplierName = db.Supplier.FirstOrDefault(x => x.SupplierId == model.SupplierId.Value).Name,
+                        Tags = document.GetValue("tags").ToBsonDocument().Values.ToList(),
+                        Age = document.GetValue("age").ToInt32()
+                    };
+                    model.Products.Add(product);
+                }
             }
             return View(model);
         }

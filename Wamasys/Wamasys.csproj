@@ -219,13 +219,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WmsDbContext.cs" />
-    <Compile Include="Migrations\201606222009233_InitialCreate.cs" />
-    <Compile Include="Migrations\201606222009233_InitialCreate.Designer.cs">
-      <DependentUpon>201606222009233_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606230122587_wamasysMich2db.cs" />
-    <Compile Include="Migrations\201606230122587_wamasysMich2db.Designer.cs">
-      <DependentUpon>201606230122587_wamasysMich2db.cs</DependentUpon>
+    <Compile Include="Migrations\201606230856318_Initial.cs" />
+    <Compile Include="Migrations\201606230856318_Initial.Designer.cs">
+      <DependentUpon>201606230856318_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\StoreNames.cs" />
     <Compile Include="Models\Values\RoleModel.cs" />
@@ -502,11 +498,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606222009233_InitialCreate.resx">
-      <DependentUpon>201606222009233_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606230122587_wamasysMich2db.resx">
-      <DependentUpon>201606230122587_wamasysMich2db.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606230856318_Initial.resx">
+      <DependentUpon>201606230856318_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

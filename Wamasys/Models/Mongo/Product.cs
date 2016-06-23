@@ -24,6 +24,8 @@ namespace Wamasys.Models.Mongo
 
         public int SupplierId { get; set; }
 
+        public string SupplierName { get; set; }
+
         public int Age { get; set; }
 
         public List<BsonValue> Tags { get; set; }
