@@ -225,7 +225,6 @@
       <DependentUpon>201606222009233_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\StoreNames.cs" />
-    <Compile Include="Models\Api\Contact.cs" />
     <Compile Include="Models\Values\RoleModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
