@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201606222009233_InitialCreate.Designer.cs">
       <DependentUpon>201606222009233_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606230122587_wamasysMich2db.cs" />
+    <Compile Include="Migrations\201606230122587_wamasysMich2db.Designer.cs">
+      <DependentUpon>201606230122587_wamasysMich2db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\StoreNames.cs" />
     <Compile Include="Models\Values\RoleModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -500,6 +504,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201606222009233_InitialCreate.resx">
       <DependentUpon>201606222009233_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606230122587_wamasysMich2db.resx">
+      <DependentUpon>201606230122587_wamasysMich2db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

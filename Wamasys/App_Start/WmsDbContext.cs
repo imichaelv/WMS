@@ -27,7 +27,7 @@ namespace Wamasys
         public DbSet<SupplierOrder> SupplierOrder { get; set; }
         public DbSet<ApiKey> ApiKeys { get; set; }
 
-        public ApplicationDbContext() : base("wamasysdb2")
+        public ApplicationDbContext() : base("wamasysdb3")
         {
 
         }

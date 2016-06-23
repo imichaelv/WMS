@@ -18,14 +18,18 @@ namespace Wamasys.Services
             using (var db = new ApplicationDbContext())
             {
                 var products = db.Product.Skip(amount - 10).Take(10);
-                foreach (var product in products)
+                if (products.Any())
                 {
-                    var newProduct = new ProductModel
+                    foreach (var product in products)
                     {
-                        ProductId = product.ProductId,
-                        Amount = product.MinimumAmount
-                    };
-                    newProductsList.Add(newProduct);
+                        var newProduct = new ProductModel
+                        {
+                            ProductId = product.ProductId,
+                            Amount = product.MinimumAmount
+                        };
+                        newProductsList.Add(newProduct);
+
+                    }
                 }
             }
             return newProductsList.ToArray();
