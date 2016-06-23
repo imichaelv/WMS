@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MongoDB.Bson;
@@ -23,8 +20,13 @@ namespace Wamasys.Migrations
 
         private readonly char[] _alphabet = new char[] {'a', 'b', 'c', 'd', 'e', 'f'};
 
+        protected static IMongoClient _client;
+        protected static IMongoDatabase _database;
+
         public Configuration()
         {
+            _client = new MongoClient();
+            _database = _client.GetDatabase("wamasys");
             AutomaticMigrationsEnabled = true;
         }
 
@@ -203,15 +205,13 @@ namespace Wamasys.Migrations
                 context.SaveChanges();
             }
 
-            /*
             // Product
             var productList = new List<Product>();
-
-            var collection = Database.GetCollection<Product>("products");
+            var collection = _database.GetCollection<Product>("products");
             var filter = new BsonDocument();
-            using (var cursor = await collection.FindAsync(filter))
+            using (var cursor = collection.FindSync(filter))
             {
-                while (await cursor.MoveNextAsync())
+                while (cursor.MoveNext())
                 {
                     var batch = cursor.Current;
                     productList.AddRange(batch.Select(document => new Product
@@ -221,7 +221,6 @@ namespace Wamasys.Migrations
                     context.Product.AddRange(productList);
                 }
             }
-            */
         }
     }
 }
