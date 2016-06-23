@@ -12,7 +12,6 @@ using Wamasys.Services;
 
 namespace Wamasys.Controllers
 {
-    [ApiAuthentication]
     public class ProductApiController : ApiController
     {
         public ProductModel Get()
@@ -26,9 +25,11 @@ namespace Wamasys.Controllers
             {
                 var products = repo.GetProducts(id);
 
-                if (products != null && products.Length < 0)
+                return products;
+
+                /*if (products != null && products.Length < 0)
                 {
-                    return products;
+                    
                 }
 
                 var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
@@ -36,7 +37,7 @@ namespace Wamasys.Controllers
                     Content = new StringContent("There are no items on this page"),
                     ReasonPhrase = "The given page number was too high"
                 };
-                throw new HttpResponseException(resp);
+                throw new HttpResponseException(resp);*/
             }
         }
     }
