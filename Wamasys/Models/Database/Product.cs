@@ -9,6 +9,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Wamasys.Models.Database
 {
+    [BsonIgnoreExtraElements]
     public class Product
     {
         public Product()
@@ -17,7 +18,6 @@ namespace Wamasys.Models.Database
         }
 
         [Key]
-        [BsonElement("id")]
         public int ProductId { get; set; }
 
         public int MinimumAmount { get; set; }
