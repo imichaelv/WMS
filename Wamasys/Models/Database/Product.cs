@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using MongoDB.Bson;
 
 namespace Wamasys.Models.Database
 {
@@ -16,6 +17,8 @@ namespace Wamasys.Models.Database
 
         [Key]
         public int ProductId { get; set; }
+
+        public ObjectId Id { get; set; }
 
         public int MinimumAmount { get; set; }
 
