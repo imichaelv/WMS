@@ -15,7 +15,7 @@
     </thead>
     <tbody>
     @{
-        if (Model.ApiKeys.Count == 0)
+        if (Model.ApiKeys.Count == null || Model.ApiKeys.Count == 0)
         {
             <tr>
                 <td>Er zijn momenteel geen verzoeken</td>

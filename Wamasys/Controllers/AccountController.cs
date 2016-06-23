@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -431,7 +432,19 @@ namespace Wamasys.Controllers
 
         public ActionResult ApiKeys()
         {
-            return View();
+            List<ApiKey> keys = new List<ApiKey>(); 
+            using (var db = new ApplicationDbContext())
+            {
+                var userId = User.Identity.GetUserId();
+                keys = db.ApiKeys.Where(row => row.UserId == userId).ToList();
+            }
+
+            var model = new ApiKeyViewModel
+            {
+                ApiKeys = keys
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -440,6 +453,7 @@ namespace Wamasys.Controllers
         {
             using (var cryptoProvider = new RNGCryptoServiceProvider())
             {
+                var userId = User.Identity.GetUserId();
                 var secretKeyByteArray = new byte[32]; //256 bit
                 cryptoProvider.GetBytes(secretKeyByteArray);
                 var apiKey = Convert.ToBase64String(secretKeyByteArray);
@@ -448,7 +462,8 @@ namespace Wamasys.Controllers
                 {
                     var newKey = new ApiKey
                     {
-                        UserId = User.Identity.GetUserId(),
+                        ApiKeyId = Guid.NewGuid(),
+                        UserId = userId,
                         Created = DateTime.Now,
                         Disabled = false,
                         SecretKey = apiKey
@@ -458,7 +473,7 @@ namespace Wamasys.Controllers
                     await db.SaveChangesAsync();
                 }
             }
-            return ApiKeys();
+            return RedirectToAction("ApiKeys", "Account");
         }
 
         #region Helpers
